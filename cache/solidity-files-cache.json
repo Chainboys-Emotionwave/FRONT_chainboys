@@ -1,0 +1,225 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\emotionwave_project1\\emotionwave1\\contracts\\lib\\ERC721Minimal.sol": {
+      "lastModificationDate": 1757236321871,
+      "contentHash": "38125f7bfdc458d6cce21ee3e955722f",
+      "sourceName": "contracts/lib/ERC721Minimal.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC721Minimal"
+      ]
+    },
+    "C:\\emotionwave_project1\\emotionwave1\\contracts\\SoulboundBadge.sol": {
+      "lastModificationDate": 1757236321871,
+      "contentHash": "507d5eb0569ccd0a185422d02778cb6d",
+      "sourceName": "contracts/SoulboundBadge.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./lib/ERC721Minimal.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SoulboundBadge"
+      ]
+    },
+    "C:\\emotionwave_project1\\emotionwave1\\contracts\\RewardPool.sol": {
+      "lastModificationDate": 1757236321862,
+      "contentHash": "7b52861c6825debad8a0ac93ee1d0616",
+      "sourceName": "contracts/RewardPool.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "RewardPool"
+      ]
+    },
+    "C:\\Users\\leesh\\emochain\\emotionwave1\\contracts\\lib\\ERC721Minimal.sol": {
+      "lastModificationDate": 1757244602123,
+      "contentHash": "8b3eeebca0ae6635bc76ac408775e7a8",
+      "sourceName": "contracts/lib/ERC721Minimal.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC721Minimal"
+      ]
+    },
+    "C:\\Users\\leesh\\emochain\\emotionwave1\\contracts\\SoulboundBadge.sol": {
+      "lastModificationDate": 1757244602041,
+      "contentHash": "f99437759d62db0c544abdb863a044dc",
+      "sourceName": "contracts/SoulboundBadge.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./lib/ERC721Minimal.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SoulboundBadge"
+      ]
+    },
+    "C:\\Users\\leesh\\emochain\\emotionwave1\\contracts\\RewardPool.sol": {
+      "lastModificationDate": 1757244602009,
+      "contentHash": "0710169041de6242352c73a147477c54",
+      "sourceName": "contracts/RewardPool.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "RewardPool"
+      ]
+    }
+  }
+}

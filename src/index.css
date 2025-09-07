@@ -5,9 +5,526 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+nav {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px 0;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+nav a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 16px;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #764ba2;
+}
+
+/* 랭킹 페이지 스타일 */
+.ranking-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.ranking-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-bottom: 24px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ranking-title {
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.ranking-subtitle {
+  font-size: 1.1rem;
+  margin: 8px 0 0 0;
+  opacity: 0.9;
+}
+
+.header-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 필터 섹션 */
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.filter-select {
+  padding: 10px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  min-width: 150px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 랭킹 리스트 */
+.ranking-list {
+  margin-bottom: 24px;
+}
+
+.ranking-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ranking-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 200px;
+  gap: 24px;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #f1f3f4;
+  border-radius: 12px;
+  background: white;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ranking-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ranking-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border-color: #667eea;
+}
+
+.ranking-item:hover::before {
+  opacity: 1;
+}
+
+.ranking-item.top-three {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+  border-color: #ffd700;
+}
+
+.ranking-item.top-three::before {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  opacity: 1;
+}
+
+.rank-section {
+  text-align: center;
+}
+
+.rank-badge {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.content-section {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.content-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.content-info {
+  flex: 1;
+}
+
+.content-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.content-description {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.content-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.content-meta span {
+  font-size: 0.85rem;
+  color: #888;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.content-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.stats-section {
+  text-align: center;
+}
+
+.stat-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.like-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.like-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+/* 차트 섹션 */
+.chart-section {
+  margin-bottom: 24px;
+}
+
+.chart-section h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 1.4rem;
+}
+
+.chart-placeholder {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 300px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  height: 200px;
+  gap: 16px;
+}
+
+.chart-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 120px;
+}
+
+.bar-fill {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  animation: barGrow 0.8s ease-out forwards;
+  min-height: 20px;
+  transform-origin: bottom;
+}
+
+@keyframes barGrow {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.bar-label {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 8px;
+  text-align: center;
+  word-break: break-word;
+}
+
+.bar-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 4px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+  .ranking-item {
+    grid-template-columns: 100px 1fr 180px;
+    gap: 16px;
+  }
+  
+  .header-stats {
+    gap: 20px;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ranking-container {
+    padding: 16px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .ranking-title {
+    font-size: 2rem;
+  }
+  
+  .header-stats {
+    justify-content: center;
+  }
+  
+  .filter-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .filter-select {
+    min-width: 100%;
+  }
+  
+  .ranking-item {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .content-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .content-meta {
+    justify-content: center;
+  }
+  
+  .stat-row {
+    justify-content: center;
+  }
+  
+  .chart-bars {
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+  }
+  
+  .chart-bar {
+    flex-direction: row;
+    align-items: center;
+    max-width: none;
+  }
+  
+  .bar-fill {
+    width: 100px;
+    height: 20px;
+    border-radius: 4px;
+  }
+  
+  .bar-label {
+    margin: 0 0 0 12px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-title {
+    font-size: 1.8rem;
+  }
+  
+  .header-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .content-icon {
+    font-size: 2.5rem;
+  }
+  
+  .content-title {
+    font-size: 1.1rem;
+  }
+  
+  .content-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .stat-row {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
