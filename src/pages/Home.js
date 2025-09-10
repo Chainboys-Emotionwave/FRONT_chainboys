@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RewardPoolPanel from "../components/RewardPoolPanel";
 
 // 데모용 인기 콘텐츠 데이터

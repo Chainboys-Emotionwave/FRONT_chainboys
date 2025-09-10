@@ -34,10 +34,10 @@ function Footer() {
               K-POP 팬 창작자의 열정과 기여가 정당한 가치로 인정받는 생태계
             </p>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <a href="#" style={{ color: '#666', textDecoration: 'none' }}>📘</a>
-              <a href="#" style={{ color: '#666', textDecoration: 'none' }}>📷</a>
-              <a href="#" style={{ color: '#666', textDecoration: 'none' }}>🐦</a>
-              <a href="#" style={{ color: '#666', textDecoration: 'none' }}>📺</a>
+              <span style={{ color: '#666', cursor: 'pointer' }}>📘</span>
+              <span style={{ color: '#666', cursor: 'pointer' }}>📷</span>
+              <span style={{ color: '#666', cursor: 'pointer' }}>🐦</span>
+              <span style={{ color: '#666', cursor: 'pointer' }}>📺</span>
             </div>
           </div>
 
@@ -84,10 +84,10 @@ function Footer() {
               flexDirection: 'column',
               gap: '8px'
             }}>
-              <li><a href="#" style={{ color: '#666', textDecoration: 'none' }}>이용약관</a></li>
-              <li><a href="#" style={{ color: '#666', textDecoration: 'none' }}>개인정보처리방침</a></li>
-              <li><a href="#" style={{ color: '#666', textDecoration: 'none' }}>서비스 가이드</a></li>
-              <li><a href="#" style={{ color: '#666', textDecoration: 'none' }}>자주 묻는 질문</a></li>
+              <li><span style={{ color: '#666', cursor: 'pointer' }}>이용약관</span></li>
+              <li><span style={{ color: '#666', cursor: 'pointer' }}>개인정보처리방침</span></li>
+              <li><span style={{ color: '#666', cursor: 'pointer' }}>서비스 가이드</span></li>
+              <li><span style={{ color: '#666', cursor: 'pointer' }}>자주 묻는 질문</span></li>
             </ul>
           </div>
 

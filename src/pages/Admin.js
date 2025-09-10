@@ -374,12 +374,11 @@ function Admin() {
                         Admin
                       </td>
                       <td style={{ padding: '12px', textAlign: 'center' }}>
-                        <a 
-                          href="#"
-                          style={{ color: '#667eea', textDecoration: 'none', fontSize: '12px' }}
+                        <span 
+                          style={{ color: '#667eea', cursor: 'pointer', fontSize: '12px' }}
                         >
                           보기
-                        </a>
+                        </span>
                       </td>
                     </tr>
                   </tbody>
@@ -451,12 +450,11 @@ function Admin() {
                   
                   {reward.txHash && (
                     <div style={{ marginTop: '12px' }}>
-                      <a 
-                        href="#"
-                        style={{ color: '#667eea', textDecoration: 'none', fontSize: '12px' }}
+                      <span 
+                        style={{ color: '#667eea', cursor: 'pointer', fontSize: '12px' }}
                       >
                         트랜잭션 보기: {reward.txHash}
-                      </a>
+                      </span>
                     </div>
                   )}
                 </div>

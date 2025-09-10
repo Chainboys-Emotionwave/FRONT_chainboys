@@ -1,13 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ethers } from "ethers";
 
 function WalletConnect() {
   const [account, setAccount] = useState("");
-  const [network, setNetwork] = useState("");
+  const [, setNetwork] = useState("");
   const [error, setError] = useState("");
   const [chainId, setChainId] = useState(0);
   const [isConnecting, setIsConnecting] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+
+  const checkConnection = useCallback(async () => {
+    try {
+      if (!window.ethereum) return;
+      
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      if (accounts.length > 0) {
+        setAccount(accounts[0]);
+        await loadUserProfile(accounts[0]);
+      }
+    } catch (error) {
+      console.error("연결 상태 확인 실패:", error);
+    }
+  }, []);
+
+  const handleAccountsChanged = useCallback((accounts) => {
+    if (accounts.length > 0) {
+      setAccount(accounts[0]);
+      loadUserProfile(accounts[0]);
+    } else {
+      setAccount("");
+      setUserProfile(null);
+    }
+  }, []);
 
   useEffect(() => {
     if (!window.ethereum) return;
@@ -29,31 +53,7 @@ function WalletConnect() {
       window.ethereum?.removeListener?.("accountsChanged", handleAccountsChanged);
       window.ethereum?.removeListener?.("chainChanged", handleChainChanged);
     };
-  }, []);
-
-  const checkConnection = async () => {
-    try {
-      if (!window.ethereum) return;
-      
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      if (accounts.length > 0) {
-        setAccount(accounts[0]);
-        await loadUserProfile(accounts[0]);
-      }
-    } catch (error) {
-      console.error("연결 상태 확인 실패:", error);
-    }
-  };
-
-  const handleAccountsChanged = (accounts) => {
-    if (accounts.length > 0) {
-      setAccount(accounts[0]);
-      loadUserProfile(accounts[0]);
-    } else {
-      setAccount("");
-      setUserProfile(null);
-    }
-  };
+  }, [checkConnection, handleAccountsChanged]);
 
   const handleChainChanged = () => {
     window.location.reload();
