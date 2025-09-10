@@ -48,7 +48,7 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "^1.0.0",
-    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/ethers-v6": "^0.4.3",
     "@typechain/hardhat": "^8.0.0",
     "@types/chai": "^4.2.0",
     "@types/mocha": "^10.0.0",
@@ -62,5 +62,8 @@
     "ts-node": "^10.9.1",
     "typechain": "^8.2.0",
     "typescript": "^5.0.0"
+  },
+  "overrides": {
+    "@typechain/ethers-v6": "^0.4.3"
   }
 }
