@@ -1,133 +1,122 @@
 import { useMemo, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const MOCK_CONTENTS = [
+// 데모용 창작자 랭킹 데이터
+const MOCK_CREATORS = [
   { 
     id: "1", 
-    title: "팬 커버송 #1", 
-    price: 0.05, 
-    icon: "🎵", 
+    nickname: "MusicLover123", 
+    walletAddress: "0x1234...abcd",
+    weeklyCheers: 15420, 
+    totalCheers: 89200,
+    profileImage: null,
     category: "음악",
-    creator: "MusicLover123",
-    views: 15420,
-    uploadDate: "2025-08-15",
-    description: "인기곡을 아름다운 목소리로 커버한 작품",
-    tags: ["커버", "발라드", "감성"]
+    contentCount: 15,
+    badges: ["주간 챔피언", "응원 마스터"],
+    growthRate: 25.3
   },
   { 
     id: "2", 
-    title: "팬 아트 #2", 
-    price: 0.03, 
-    icon: "📸", 
-    category: "아트",
-    creator: "ArtMaster",
-    views: 8930,
-    uploadDate: "2025-08-14",
-    description: "디지털 아트로 표현한 팬아트 작품",
-    tags: ["디지털아트", "팬아트", "일러스트"]
+    nickname: "DanceQueen", 
+    walletAddress: "0x5678...efgh",
+    weeklyCheers: 12300, 
+    totalCheers: 67800,
+    profileImage: null,
+    category: "댄스",
+    contentCount: 12,
+    badges: ["댄스 마스터", "라이징 스타"],
+    growthRate: 18.7
   },
   { 
     id: "3", 
-    title: "댄스 챌린지 #3", 
-    price: 0.04, 
-    icon: "🎤", 
-    category: "댄스",
-    creator: "DanceQueen",
-    views: 22100,
-    uploadDate: "2025-08-13",
-    description: "트렌디한 댄스 챌린지 영상",
-    tags: ["댄스", "챌린지", "트렌드"]
+    nickname: "ArtMaster", 
+    walletAddress: "0x9abc...ijkl",
+    weeklyCheers: 9870, 
+    totalCheers: 45600,
+    profileImage: null,
+    category: "아트",
+    contentCount: 8,
+    badges: ["아트 마스터"],
+    growthRate: 12.4
   },
   { 
     id: "4", 
-    title: "리믹스 트랙 #4", 
-    price: 0.06, 
-    icon: "🎧", 
+    nickname: "BeatMaker", 
+    walletAddress: "0xdef0...mnop",
+    weeklyCheers: 8750, 
+    totalCheers: 38900,
+    profileImage: null,
     category: "음악",
-    creator: "BeatMaker",
-    views: 18750,
-    uploadDate: "2025-08-12",
-    description: "독창적인 리믹스로 재탄생한 히트곡",
-    tags: ["리믹스", "EDM", "힙합"]
+    contentCount: 10,
+    badges: ["비트 마스터"],
+    growthRate: 8.9
   },
   { 
     id: "5", 
-    title: "코믹 스케치 #5", 
-    price: 0.02, 
-    icon: "🎭", 
+    nickname: "ComedyKing", 
+    walletAddress: "0x1234...qrst",
+    weeklyCheers: 7200, 
+    totalCheers: 32100,
+    profileImage: null,
     category: "코미디",
-    creator: "ComedyKing",
-    views: 12300,
-    uploadDate: "2025-08-11",
-    description: "웃음이 터지는 코믹 스케치",
-    tags: ["코미디", "스케치", "유머"]
+    contentCount: 6,
+    badges: ["코미디 마스터"],
+    growthRate: 15.2
   },
   { 
     id: "6", 
-    title: "OO아이돌 레시피 #6", 
-    price: 0.04, 
-    icon: "🍳", 
+    nickname: "ChefMaster", 
+    walletAddress: "0x5678...uvwx",
+    weeklyCheers: 6500, 
+    totalCheers: 28900,
+    profileImage: null,
     category: "라이프스타일",
-    creator: "ChefMaster",
-    views: 9650,
-    uploadDate: "2025-08-10",
-    description: "OO아이돌이 추천한 그 레시피? 직접 만들어보세요!",
-    tags: ["요리", "레시피", "홈쿡"]
+    contentCount: 9,
+    badges: ["요리 마스터"],
+    growthRate: 22.1
   }
 ];
 
 function Ranking() {
-  const [likes, setLikes] = useState({});
+  const [activeTab, setActiveTab] = useState("weekly");
   const [selectedCategory, setSelectedCategory] = useState("전체");
-  const [sortBy, setSortBy] = useState("likes");
-  const [timeFilter, setTimeFilter] = useState("all");
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
+  const [userRank, setUserRank] = useState(null);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("emo.ranking.likes");
-      if (saved) setLikes(JSON.parse(saved));
-    } catch (_) {}
+    // 지갑 연결 상태 확인 (데모용)
+    setIsWalletConnected(true);
+    
+    // 사용자 랭킹 정보 (데모용)
+    setUserRank({
+      weeklyRank: 15,
+      weeklyCheers: 3200,
+      totalRank: 45,
+      totalCheers: 18900
+    });
   }, []);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem("emo.ranking.likes", JSON.stringify(likes));
-    } catch (_) {}
-  }, [likes]);
-
-  const categories = ["전체", ...new Set(MOCK_CONTENTS.map(c => c.category))];
+  const categories = ["전체", ...new Set(MOCK_CREATORS.map(c => c.category))];
 
   const filteredAndRanked = useMemo(() => {
-    let filtered = MOCK_CONTENTS.filter(c => 
+    let filtered = MOCK_CREATORS.filter(c => 
       selectedCategory === "전체" || c.category === selectedCategory
     );
 
-    // 시간 필터 적용 (실제로는 날짜 계산이 필요하지만 여기서는 간단히 처리)
-    if (timeFilter === "week") {
-      filtered = filtered.filter(c => c.uploadDate >= "2025-01-08");
-    } else if (timeFilter === "month") {
-      filtered = filtered.filter(c => c.uploadDate >= "2024-12-15");
-    }
-
-    // 정렬
+    // 주간/명예의 전당에 따라 정렬 기준 변경
     const sorted = filtered.sort((a, b) => {
-      if (sortBy === "likes") {
-        return (b.likes || 0) - (a.likes || 0);
-      } else if (sortBy === "views") {
-        return b.views - a.views;
-      } else if (sortBy === "price") {
-        return b.price - a.price;
+      if (activeTab === "weekly") {
+        return b.weeklyCheers - a.weeklyCheers;
+      } else {
+        return b.totalCheers - a.totalCheers;
       }
-      return 0;
     });
 
     return sorted.map((c, i) => ({ 
       ...c, 
-      rank: i + 1,
-      likes: Number(likes[c.id] || 0)
+      rank: i + 1
     }));
-  }, [likes, selectedCategory, sortBy, timeFilter]);
-
-  const like = (id) => setLikes((m) => ({ ...m, [id]: Number(m[id] || 0) + 1 }));
+  }, [activeTab, selectedCategory]);
 
   const rankBadge = (r) => {
     if (r === 1) return { emoji: "🥇", text: "1위", color: "#FFD700" };
@@ -136,136 +125,290 @@ function Ranking() {
     return { emoji: "", text: `${r}위`, color: "#666" };
   };
 
-  const totalLikes = Object.values(likes).reduce((sum, count) => sum + count, 0);
-  const totalViews = MOCK_CONTENTS.reduce((sum, c) => sum + c.views, 0);
-  const avgPrice = (MOCK_CONTENTS.reduce((sum, c) => sum + c.price, 0) / MOCK_CONTENTS.length).toFixed(3);
+  const getCurrentWeekRange = () => {
+    const now = new Date();
+    const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+    const endOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
+    return `${startOfWeek.toLocaleDateString()} ~ ${endOfWeek.toLocaleDateString()}`;
+  };
+
+  const totalWeeklyCheers = MOCK_CREATORS.reduce((sum, c) => sum + c.weeklyCheers, 0);
+  const totalAllTimeCheers = MOCK_CREATORS.reduce((sum, c) => sum + c.totalCheers, 0);
+  const activeCreators = MOCK_CREATORS.length;
 
   return (
-    <div className="ranking-container">
+    <div>
       {/* 헤더 섹션 */}
-      <div className="card ranking-header">
-        <div className="header-content">
-          <div className="header-text">
-            <h1 className="ranking-title">🏆 인기 랭킹</h1>
-            <p className="ranking-subtitle">응원 수 기준 실시간 랭킹을 확인하세요</p>
-          </div>
-          <div className="header-stats">
-            <div className="stat-item">
-              <div className="stat-number">{totalLikes}</div>
-              <div className="stat-label">총 응원</div>
+      <div className="card hero-section">
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2rem' }}>
+            🏆 창작자 랭킹
+          </h1>
+          <p style={{ color: '#666', fontSize: '18px', marginBottom: '24px' }}>
+            팬들의 응원으로 결정되는 실시간 랭킹
+          </p>
+          
+          {/* 통계 카드 */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
+            gap: '16px',
+            marginBottom: '24px'
+          }}>
+            <div style={{ 
+              background: '#f8f9fa', 
+              padding: '16px', 
+              borderRadius: '12px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#e74c3c' }}>
+                {totalWeeklyCheers.toLocaleString()}
+              </div>
+              <div style={{ fontSize: '12px', color: '#666' }}>주간 총 응원</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-number">{totalViews.toLocaleString()}</div>
-              <div className="stat-label">총 조회수</div>
+            <div style={{ 
+              background: '#f8f9fa', 
+              padding: '16px', 
+              borderRadius: '12px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#27ae60' }}>
+                {totalAllTimeCheers.toLocaleString()}
+              </div>
+              <div style={{ fontSize: '12px', color: '#666' }}>누적 총 응원</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-number">{avgPrice} ETH</div>
-              <div className="stat-label">평균 가격</div>
+            <div style={{ 
+              background: '#f8f9fa', 
+              padding: '16px', 
+              borderRadius: '12px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#667eea' }}>
+                {activeCreators}
+              </div>
+              <div style={{ fontSize: '12px', color: '#666' }}>활성 창작자</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 필터 섹션 */}
-      <div className="card filter-section">
-        <div className="filter-row">
-          <div className="filter-group">
-            <label>카테고리</label>
-            <select 
-              value={selectedCategory} 
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="filter-select"
-            >
-              {categories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
-          </div>
-          
-          <div className="filter-group">
-            <label>정렬 기준</label>
-            <select 
-              value={sortBy} 
-              onChange={(e) => setSortBy(e.target.value)}
-              className="filter-select"
-            >
-              <option value="likes">응원 수</option>
-              <option value="views">조회수</option>
-              <option value="price">가격</option>
-            </select>
-          </div>
-          
-          <div className="filter-group">
-            <label>기간</label>
-            <select 
-              value={timeFilter} 
-              onChange={(e) => setTimeFilter(e.target.value)}
-              className="filter-select"
-            >
-              <option value="all">전체</option>
-              <option value="week">최근 1주</option>
-              <option value="month">최근 1개월</option>
-            </select>
+      {/* 내 순위 (로그인 시에만 표시) */}
+      {isWalletConnected && userRank && (
+        <div className="card" style={{ 
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          marginBottom: '20px'
+        }}>
+          <div style={{ padding: '20px' }}>
+            <h3 style={{ margin: '0 0 16px 0', color: 'white' }}>🎯 내 순위</h3>
+            <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                  {userRank.weeklyRank}위
+                </div>
+                <div style={{ fontSize: '14px', opacity: 0.9 }}>주간 랭킹</div>
+                <div style={{ fontSize: '12px', opacity: 0.8 }}>
+                  {userRank.weeklyCheers.toLocaleString()} 응원
+                </div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                  {userRank.totalRank}위
+                </div>
+                <div style={{ fontSize: '14px', opacity: 0.9 }}>명예의 전당</div>
+                <div style={{ fontSize: '12px', opacity: 0.8 }}>
+                  {userRank.totalCheers.toLocaleString()} 응원
+                </div>
+              </div>
+              <div style={{ flex: 1, textAlign: 'right' }}>
+                <Link to="/upload" className="btn" style={{ 
+                  background: 'rgba(255,255,255,0.2)', 
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.3)'
+                }}>
+                  📤 콘텐츠 등록하기
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* 랭킹 리스트 */}
-      <div className="card ranking-list">
-        <div className="ranking-grid">
-          {filteredAndRanked.map((c, index) => {
-            const badge = rankBadge(c.rank);
+      {/* 탭 및 필터 */}
+      <div className="card">
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          marginBottom: '20px',
+          flexWrap: 'wrap',
+          gap: '16px'
+        }}>
+          {/* 탭 */}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              onClick={() => setActiveTab("weekly")}
+              style={{
+                padding: '12px 24px',
+                border: 'none',
+                background: activeTab === "weekly" ? '#667eea' : '#f8f9fa',
+                color: activeTab === "weekly" ? 'white' : '#666',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: activeTab === "weekly" ? '600' : '400'
+              }}
+            >
+              📅 주간 랭킹
+            </button>
+            <button
+              onClick={() => setActiveTab("hallOfFame")}
+              style={{
+                padding: '12px 24px',
+                border: 'none',
+                background: activeTab === "hallOfFame" ? '#667eea' : '#f8f9fa',
+                color: activeTab === "hallOfFame" ? 'white' : '#666',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: activeTab === "hallOfFame" ? '600' : '400'
+              }}
+            >
+              🏆 명예의 전당
+            </button>
+          </div>
+
+          {/* 카테고리 필터 */}
+          <select 
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            style={{ 
+              padding: '12px 16px', 
+              borderRadius: '8px', 
+              border: '1px solid #ddd',
+              fontSize: '14px'
+            }}
+          >
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* 랭킹 기간 정보 */}
+        {activeTab === "weekly" && (
+          <div style={{ 
+            background: '#e8f4f8', 
+            padding: '12px 16px', 
+            borderRadius: '8px',
+            marginBottom: '20px',
+            fontSize: '14px',
+            color: '#0c5460'
+          }}>
+            📅 이번 주 랭킹 집계 기간: {getCurrentWeekRange()}
+          </div>
+        )}
+
+        {/* 랭킹 리스트 */}
+        <div style={{ display: 'grid', gap: '16px' }}>
+          {filteredAndRanked.map((creator, index) => {
+            const badge = rankBadge(creator.rank);
             return (
-              <div key={c.id} className={`ranking-item ${index < 3 ? 'top-three' : ''}`}>
-                <div className="rank-section">
-                  <div 
-                    className="rank-badge"
-                    style={{ color: badge.color }}
-                  >
-                    {badge.emoji} {badge.text}
-                  </div>
-                </div>
+              <div key={creator.id} style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '20px',
+                padding: '20px',
+                background: index < 3 ? '#fff8e1' : '#f8f9fa',
+                borderRadius: '12px',
+                border: index < 3 ? '2px solid #ffc107' : '1px solid #e9ecef',
+                transition: 'transform 0.2s',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}>
                 
-                <div className="content-section">
-                  <div className="content-icon">{c.icon}</div>
-                  <div className="content-info">
-                    <h3 className="content-title">{c.title}</h3>
-                    <p className="content-description">{c.description}</p>
-                    <div className="content-meta">
-                      <span className="creator">👤 {c.creator}</span>
-                      <span className="category">📂 {c.category}</span>
-                      <span className="date">📅 {c.uploadDate}</span>
-                    </div>
-                    <div className="content-tags">
-                      {c.tags.map(tag => (
-                        <span key={tag} className="tag">#{tag}</span>
-                      ))}
-                    </div>
+                {/* 순위 */}
+                <div style={{ 
+                  minWidth: '60px', 
+                  textAlign: 'center',
+                  color: badge.color,
+                  fontWeight: 'bold',
+                  fontSize: '18px'
+                }}>
+                  {badge.emoji}<br />
+                  {badge.text}
+                </div>
+
+                {/* 프로필 */}
+                <div style={{ 
+                  width: '60px', 
+                  height: '60px', 
+                  borderRadius: '50%', 
+                  background: '#667eea',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '24px',
+                  fontWeight: 'bold'
+                }}>
+                  {creator.nickname.charAt(0).toUpperCase()}
+                </div>
+
+                {/* 정보 */}
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ margin: '0 0 8px 0', color: '#333' }}>
+                    {creator.nickname}
+                  </h3>
+                  <div style={{ display: 'flex', gap: '16px', fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                    <span>📂 {creator.category}</span>
+                    <span>📝 콘텐츠 {creator.contentCount}개</span>
+                    <span style={{ color: creator.growthRate > 0 ? '#27ae60' : '#e74c3c' }}>
+                      📈 {creator.growthRate > 0 ? '+' : ''}{creator.growthRate}%
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {creator.badges.map((badge, idx) => (
+                      <span 
+                        key={idx}
+                        style={{
+                          background: '#667eea',
+                          color: 'white',
+                          padding: '2px 8px',
+                          borderRadius: '12px',
+                          fontSize: '12px'
+                        }}
+                      >
+                        {badge}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                
-                <div className="stats-section">
-                  <div className="stat-row">
-                    <div className="stat">
-                      <div className="stat-value">{c.likes}</div>
-                      <div className="stat-label">응원</div>
-                    </div>
-                    <div className="stat">
-                      <div className="stat-value">{c.views.toLocaleString()}</div>
-                      <div className="stat-label">조회</div>
-                    </div>
-                    <div className="stat">
-                      <div className="stat-value">{c.price} ETH</div>
-                      <div className="stat-label">가격</div>
-                    </div>
+
+                {/* 통계 */}
+                <div style={{ textAlign: 'center', minWidth: '120px' }}>
+                  <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#e74c3c' }}>
+                    {activeTab === "weekly" 
+                      ? creator.weeklyCheers.toLocaleString() 
+                      : creator.totalCheers.toLocaleString()
+                    }
                   </div>
-                  <button 
-                    className="like-btn"
-                    onClick={() => like(c.id)}
-                  >
-                    💖 응원하기
-                  </button>
+                  <div style={{ fontSize: '12px', color: '#666' }}>
+                    {activeTab === "weekly" ? "주간 응원" : "누적 응원"}
+                  </div>
                 </div>
+
+                {/* 액션 버튼 */}
+                <Link 
+                  to={`/creator/${creator.id}`}
+                  className="btn btn-outline"
+                  style={{ fontSize: '14px', padding: '8px 16px' }}
+                >
+                  프로필 보기
+                </Link>
               </div>
             );
           })}
@@ -273,23 +416,52 @@ function Ranking() {
       </div>
 
       {/* 차트 섹션 */}
-      <div className="card chart-section">
-        <h3>📊 인기도 트렌드</h3>
-        <div className="chart-placeholder">
-          <div className="chart-bars">
-            {filteredAndRanked.slice(0, 5).map((c, index) => (
-              <div key={c.id} className="chart-bar">
-                <div 
-                  className="bar-fill"
-                  style={{ 
-                    height: `${Math.max((c.likes / Math.max(...filteredAndRanked.map(item => item.likes), 1)) * 100, 10)}%`,
-                    animationDelay: `${index * 0.1}s`
-                  }}
-                ></div>
-                <div className="bar-label">{c.title}</div>
-                <div className="bar-value">{c.likes}</div>
-              </div>
-            ))}
+      <div className="card">
+        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 응원 트렌드</h3>
+        <div style={{ 
+          background: '#f8f9fa', 
+          padding: '20px', 
+          borderRadius: '12px',
+          textAlign: 'center'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-around', 
+            alignItems: 'end',
+            height: '200px',
+            gap: '16px'
+          }}>
+            {filteredAndRanked.slice(0, 5).map((creator, index) => {
+              const maxCheers = Math.max(...filteredAndRanked.slice(0, 5).map(c => 
+                activeTab === "weekly" ? c.weeklyCheers : c.totalCheers
+              ));
+              const currentCheers = activeTab === "weekly" ? creator.weeklyCheers : creator.totalCheers;
+              const height = (currentCheers / maxCheers) * 150;
+              
+              return (
+                <div key={creator.id} style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  gap: '8px'
+                }}>
+                  <div style={{ 
+                    width: '40px',
+                    height: `${height}px`,
+                    background: index < 3 ? '#ffc107' : '#667eea',
+                    borderRadius: '4px 4px 0 0',
+                    transition: 'height 0.5s ease',
+                    animation: `growUp 0.5s ease ${index * 0.1}s forwards`
+                  }}></div>
+                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#333' }}>
+                    {creator.nickname}
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#666' }}>
+                    {currentCheers.toLocaleString()}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
