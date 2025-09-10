@@ -118,6 +118,7 @@ function Collection() {
     // 지갑 연결 상태 확인 (데모용)
     setIsWalletConnected(true);
     setUserProfile(userData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getRarityColor = (rarity) => {
