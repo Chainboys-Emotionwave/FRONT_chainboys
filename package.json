@@ -61,9 +61,10 @@
     "solidity-coverage": "^0.8.1",
     "ts-node": "^10.9.1",
     "typechain": "^8.2.0",
-    "typescript": "^5.0.0"
+    "typescript": "^4.9.5"
   },
   "overrides": {
-    "@typechain/ethers-v6": "^0.4.3"
+    "@typechain/ethers-v6": "^0.4.3",
+    "typescript": "^4.9.5"
   }
 }
