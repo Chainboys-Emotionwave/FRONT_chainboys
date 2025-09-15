@@ -1,16 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import WalletConnect from "./WalletConnect";
 
 function Navigation() {
   const location = useLocation();
+  const { user, isAuthenticated } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cheerTokens, setCheerTokens] = useState(0);
 
-  // 데모용 응원권 개수 (실제로는 지갑 연결 후 API에서 가져옴)
+  // 로그인된 사용자의 응원권 개수 (실제로는 API에서 가져옴)
   useEffect(() => {
-    setCheerTokens(5); // 데모용
-  }, []);
+    if (isAuthenticated && user) {
+      setCheerTokens(user.fan_ticket_count || 0);
+    } else {
+      setCheerTokens(0);
+    }
+  }, [isAuthenticated, user]);
 
   const isActive = (path) => location.pathname === path;
 
@@ -147,7 +153,9 @@ function Navigation() {
             )}
 
             {/* 지갑 연결 */}
-            <WalletConnect />
+            <div style={{ border: '1px solid red', padding: '4px' }}>
+              <WalletConnect />
+            </div>
           </div>
         </div>
 

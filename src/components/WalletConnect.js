@@ -1,13 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
 import { ethers } from "ethers";
+import { useAuth } from "../contexts/AuthContext";
+import authService from "../services/authService";
 
 function WalletConnect() {
+  const { user, isAuthenticated, loginWithWallet, logout, isLoading } = useAuth();
   const [account, setAccount] = useState("");
   const [, setNetwork] = useState("");
   const [error, setError] = useState("");
   const [chainId, setChainId] = useState(0);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
 
   const checkConnection = useCallback(async () => {
     try {
@@ -16,7 +18,6 @@ function WalletConnect() {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
       if (accounts.length > 0) {
         setAccount(accounts[0]);
-        await loadUserProfile(accounts[0]);
       }
     } catch (error) {
       console.error("연결 상태 확인 실패:", error);
@@ -26,12 +27,14 @@ function WalletConnect() {
   const handleAccountsChanged = useCallback((accounts) => {
     if (accounts.length > 0) {
       setAccount(accounts[0]);
-      loadUserProfile(accounts[0]);
     } else {
       setAccount("");
-      setUserProfile(null);
+      // 지갑이 변경되면 로그아웃
+      if (isAuthenticated) {
+        logout();
+      }
     }
-  }, []);
+  }, [isAuthenticated, logout]);
 
   useEffect(() => {
     if (!window.ethereum) return;
@@ -59,25 +62,39 @@ function WalletConnect() {
     window.location.reload();
   };
 
-  const loadUserProfile = async (address) => {
+  // 웹3 지갑 로그인 처리
+  const handleWeb3Login = async (walletAddress) => {
     try {
-      // 실제로는 API에서 사용자 프로필을 가져옴
-      // 데모용으로 로컬 스토리지에서 가져오거나 기본값 사용
-      const savedProfile = localStorage.getItem(`profile_${address}`);
-      if (savedProfile) {
-        setUserProfile(JSON.parse(savedProfile));
+      setIsConnecting(true);
+      setError("");
+
+      // 1. 서명 메시지 요청
+      const message = await authService.requestMessage(walletAddress);
+      
+      // 2. 메타마스크로 서명 요청
+      const signature = await window.ethereum.request({
+        method: 'personal_sign',
+        params: [message, walletAddress],
+      });
+
+      // 3. 서명 검증 및 로그인
+      const result = await loginWithWallet(walletAddress, signature);
+      
+      if (result.success) {
+        setError("");
+        console.log("로그인 성공:", result.user);
       } else {
-        // 기본 프로필 생성
-        const defaultProfile = {
-          nickname: `User${address.slice(-4)}`,
-          avatar: null,
-          joinedAt: new Date().toISOString()
-        };
-        setUserProfile(defaultProfile);
-        localStorage.setItem(`profile_${address}`, JSON.stringify(defaultProfile));
+        setError(result.error || "로그인에 실패했습니다.");
       }
     } catch (error) {
-      console.error("프로필 로드 실패:", error);
+      console.error("웹3 로그인 오류:", error);
+      if (error.code === 4001) {
+        setError("사용자가 서명을 거부했습니다.");
+      } else {
+        setError("로그인 중 오류가 발생했습니다.");
+      }
+    } finally {
+      setIsConnecting(false);
     }
   };
 
@@ -91,6 +108,7 @@ function WalletConnect() {
         return;
       }
 
+      // 지갑 연결
       const provider = new ethers.BrowserProvider(window.ethereum);
       const accounts = await provider.send("eth_requestAccounts", []);
       
@@ -99,15 +117,15 @@ function WalletConnect() {
         return;
       }
 
-      setAccount(accounts[0]);
-      await loadUserProfile(accounts[0]);
+      const walletAddress = accounts[0];
+      setAccount(walletAddress);
       
       const net = await provider.getNetwork();
       setNetwork(net?.name || "");
       setChainId(Number(net?.chainId || 0));
       
-      // 연결 성공 알림
-      setError("");
+      // 웹3 로그인 처리
+      await handleWeb3Login(walletAddress);
       
     } catch (e) {
       if (e.code === 4001) {
@@ -122,8 +140,8 @@ function WalletConnect() {
 
   const disconnect = async () => {
     try {
+      await logout();
       setAccount("");
-      setUserProfile(null);
       setNetwork("");
       setChainId(0);
       setError("");
@@ -181,7 +199,7 @@ function WalletConnect() {
 
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-      {account ? (
+      {isAuthenticated && user ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {/* 사용자 프로필 */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -197,14 +215,14 @@ function WalletConnect() {
               fontSize: '14px',
               fontWeight: 'bold'
             }}>
-              {userProfile?.nickname?.charAt(0).toUpperCase() || account.charAt(2).toUpperCase()}
+              {user.username?.charAt(0).toUpperCase() || user.walletAddress?.charAt(2).toUpperCase()}
             </div>
             <div style={{ fontSize: 14, color: '#333' }}>
               <div style={{ fontWeight: '600' }}>
-                {userProfile?.nickname || `User${account.slice(-4)}`}
+                {user.username || `User${user.walletAddress?.slice(-4)}`}
               </div>
               <div style={{ fontSize: '12px', color: '#666' }}>
-                {account.slice(0, 6)}...{account.slice(-4)}
+                {user.walletAddress?.slice(0, 6)}...{user.walletAddress?.slice(-4)}
               </div>
             </div>
           </div>
@@ -233,10 +251,10 @@ function WalletConnect() {
         <button 
           className="btn btn-primary" 
           onClick={connect}
-          disabled={isConnecting}
+          disabled={isConnecting || isLoading}
           style={{ fontSize: '14px', padding: '8px 16px' }}
         >
-          {isConnecting ? '연결 중...' : '🔗 지갑 연결'}
+          {isConnecting || isLoading ? '연결 중...' : '🔗 지갑 연결'}
         </button>
       )}
       
