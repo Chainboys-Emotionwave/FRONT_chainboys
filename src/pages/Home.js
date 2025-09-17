@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import VillageMap from "../components/VillageMap";
+import BuildingModal from "../components/BuildingModal";
 import RewardPoolPanel from "../components/RewardPoolPanel";
 
 // 데모용 인기 콘텐츠 데이터
@@ -8,226 +10,334 @@ const POPULAR_CONTENTS = [
     id: "1",
     title: "아이돌 커버송 메들리",
     creator: "MusicLover123",
-    thumbnail: "🎵",
-    category: "음악",
-    cheers: 15420,
+    category: "K-POP",
+    cheers: 156,
     price: "0.05 ETH",
-    uploadDate: "2025-01-15",
-    description: "인기곡을 아름다운 목소리로 커버한 작품"
+    uploadDate: "2025-01-15"
   },
   {
     id: "2", 
-    title: "팬 아트 컬렉션",
-    creator: "ArtMaster",
-    thumbnail: "🎨",
-    category: "아트",
-    cheers: 8930,
+    title: "감성 발라드 모음",
+    creator: "BalladMaster",
+    category: "Ballad",
+    cheers: 89,
     price: "0.03 ETH",
-    uploadDate: "2025-01-14",
-    description: "디지털 아트로 표현한 팬아트 작품"
+    uploadDate: "2025-01-14"
   },
   {
     id: "3",
-    title: "댄스 챌린지",
-    creator: "DanceQueen", 
-    thumbnail: "💃",
-    category: "댄스",
-    cheers: 22100,
+    title: "힙합 비트 컬렉션",
+    creator: "HipHopKing",
+    category: "Hip-Hop",
+    cheers: 234,
     price: "0.08 ETH",
-    uploadDate: "2025-01-13",
-    description: "트렌디한 댄스 챌린지 영상"
-  },
-  {
-    id: "4",
-    title: "리믹스 트랙",
-    creator: "BeatMaker",
-    thumbnail: "🎧", 
-    category: "음악",
-    cheers: 18750,
-    price: "0.06 ETH",
-    uploadDate: "2025-01-12",
-    description: "독창적인 리믹스로 재탄생한 히트곡"
-  },
-  {
-    id: "5",
-    title: "코믹 스케치",
-    creator: "ComedyKing",
-    thumbnail: "🎭",
-    category: "코미디", 
-    cheers: 12300,
-    price: "0.02 ETH",
-    uploadDate: "2025-01-11",
-    description: "웃음이 터지는 코믹 스케치"
-  },
-  {
-    id: "6",
-    title: "아이돌 레시피",
-    creator: "ChefMaster",
-    thumbnail: "🍳",
-    category: "라이프스타일",
-    cheers: 9650,
-    price: "0.04 ETH", 
-    uploadDate: "2025-01-10",
-    description: "아이돌이 추천한 그 레시피? 직접 만들어보세요!"
+    uploadDate: "2025-01-13"
   }
 ];
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("전체");
-  const [sortBy, setSortBy] = useState("cheers");
+  const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const categories = ["전체", ...new Set(POPULAR_CONTENTS.map(c => c.category))];
+  const handleBuildingClick = (building) => {
+    setSelectedBuilding(building);
+    setIsModalOpen(true);
+  };
 
-  const filteredContents = POPULAR_CONTENTS
-    .filter(content => selectedCategory === "전체" || content.category === selectedCategory)
-    .sort((a, b) => {
-      if (sortBy === "cheers") return b.cheers - a.cheers;
-      if (sortBy === "price") return parseFloat(b.price) - parseFloat(a.price);
-      if (sortBy === "date") return new Date(b.uploadDate) - new Date(a.uploadDate);
-      return 0;
-    });
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedBuilding(null);
+  };
 
-  return (
-    <div>
-      <RewardPoolPanel />
-
-      {/* 메인 히어로 섹션 */}
-      <div className="card hero-section">
-        <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-          <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2.5rem' }}>
-            🎵 EmotionWave
-          </h1>
-          <p style={{ color: '#666', fontSize: '20px', marginBottom: '32px', maxWidth: '600px', margin: '0 auto 32px auto' }}>
-            K-POP 팬 창작자의 열정과 기여가 정당한 가치로 인정받는 생태계
-          </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link className="btn btn-primary" to="/upload" style={{ fontSize: '18px', padding: '12px 24px' }}>
-              📤 콘텐츠 등록하기
-            </Link>
-            <Link className="btn btn-secondary" to="/ranking" style={{ fontSize: '18px', padding: '12px 24px' }}>
-              🏆 랭킹 보기
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* 통계 섹션 */}
-      <div className="card stats-section">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', textAlign: 'center' }}>
-          <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '12px' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '8px' }}>📊</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>1,247</div>
-            <div style={{ color: '#666' }}>등록된 콘텐츠</div>
-          </div>
-          <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '12px' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '8px' }}>👥</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>892</div>
-            <div style={{ color: '#666' }}>활성 창작자</div>
-          </div>
-          <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '12px' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '8px' }}>💎</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>45.2 ETH</div>
-            <div style={{ color: '#666' }}>총 보상 풀</div>
-          </div>
-          <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '12px' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🏆</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>156</div>
-            <div style={{ color: '#666' }}>발급된 배지</div>
-          </div>
-        </div>
-      </div>
-
-      {/* 인기 콘텐츠 섹션 */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
-          <h2 style={{ color: '#333', margin: 0 }}>🔥 인기 콘텐츠</h2>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <select 
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #ddd' }}
-            >
-              {categories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
-            <select 
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #ddd' }}
-            >
-              <option value="cheers">응원순</option>
-              <option value="price">가격순</option>
-              <option value="date">최신순</option>
-            </select>
-          </div>
-        </div>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-          {filteredContents.map((content) => (
-            <div key={content.id} style={{ 
-              background: '#fff', 
-              border: '1px solid #e9ecef',
-              borderRadius: '12px', 
-              overflow: 'hidden',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              cursor: 'pointer'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}>
-              <div style={{ padding: '20px', textAlign: 'center' }}>
-                <div style={{ fontSize: '48px', marginBottom: '12px' }}>{content.thumbnail}</div>
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '1.1rem' }}>
-                  <Link to={`/content/${content.id}`} style={{ textDecoration: 'none', color: '#333' }}>
-                    {content.title}
-                  </Link>
-                </h3>
-                <p style={{ color: '#666', fontSize: '14px', margin: '0 0 8px 0' }}>
-                  👤 {content.creator}
+  const renderBuildingContent = (building) => {
+    switch (building.id) {
+      case 'townhall':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              🏛️ 마을회관에 오신 것을 환영합니다!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+              <div style={{ background: 'rgba(139, 195, 74, 0.1)', padding: '20px', borderRadius: '15px' }}>
+                <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif' }}>📜 마을 규칙</h4>
+                <ul style={{ fontFamily: 'Nunito, sans-serif', color: '#666' }}>
+                  <li>서로를 존중하고 예의를 지켜주세요</li>
+                  <li>창작물에 대한 건설적인 피드백을 제공하세요</li>
+                  <li>마을 발전에 적극적으로 참여해주세요</li>
+                </ul>
+              </div>
+              <div style={{ background: 'rgba(33, 150, 243, 0.1)', padding: '20px', borderRadius: '15px' }}>
+                <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif' }}>🗺️ 마을 가이드</h4>
+                <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666' }}>
+                  EmotionWave Village에서의 즐거운 생활을 위한 가이드입니다.
                 </p>
-                <p style={{ color: '#666', fontSize: '13px', margin: '0 0 12px 0' }}>
-                  📂 {content.category} • 📅 {content.uploadDate}
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <span style={{ color: '#e74c3c', fontSize: '14px', fontWeight: 'bold' }}>
-                    ❤️ {content.cheers.toLocaleString()}
-                  </span>
-                  <span style={{ color: '#27ae60', fontSize: '14px', fontWeight: 'bold' }}>
-                    💰 {content.price}
-                  </span>
-                </div>
-                <Link 
-                  className="btn" 
-                  to={`/content/${content.id}`}
-                  style={{ 
-                    fontSize: '14px', 
-                    padding: '10px 20px', 
-                    display: 'inline-block',
-                    width: '100%',
-                    textAlign: 'center'
-                  }}
-                >
-                  자세히 보기
+                <Link to="/guide" className="btn" style={{ marginTop: '10px' }}>
+                  가이드 보기 →
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-        
-        <div style={{ textAlign: 'center', marginTop: '24px' }}>
-          <Link className="btn btn-outline" to="/ranking" style={{ padding: '12px 24px' }}>
-            더 많은 콘텐츠 보기 →
-          </Link>
-        </div>
+          </div>
+        );
+
+      case 'musicstudio':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              🎵 음악실에서 창작의 시간을 가져보세요!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+              <div style={{ background: 'rgba(33, 150, 243, 0.1)', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
+                <div style={{ fontSize: '48px', marginBottom: '10px' }}>🎤</div>
+                <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif' }}>음악 업로드</h4>
+                <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', marginBottom: '15px' }}>
+                  새로운 음악을 업로드하고 마을 주민들과 공유하세요
+                </p>
+                <Link to="/upload" className="btn">
+                  업로드하기 →
+                </Link>
+              </div>
+              <div style={{ background: 'rgba(76, 175, 80, 0.1)', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
+                <div style={{ fontSize: '48px', marginBottom: '10px' }}>🎧</div>
+                <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif' }}>내 음악 관리</h4>
+                <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', marginBottom: '15px' }}>
+                  업로드한 음악들을 관리하고 통계를 확인하세요
+                </p>
+                <Link to="/collection" className="btn">
+                  관리하기 →
+                </Link>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'festivalground':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              🏆 축제장에서 마을의 인기 작품들을 확인하세요!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+              {POPULAR_CONTENTS.slice(0, 4).map((content) => (
+                <div key={content.id} style={{ 
+                  background: 'rgba(255, 183, 77, 0.1)', 
+                  padding: '15px', 
+                  borderRadius: '15px',
+                  border: '2px solid rgba(255, 183, 77, 0.3)'
+                }}>
+                  <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', fontSize: '14px', marginBottom: '8px' }}>
+                    {content.title}
+                  </h4>
+                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', fontSize: '12px', marginBottom: '8px' }}>
+                    by {content.creator}
+                  </p>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '12px', color: '#FF9800' }}>🎫 {content.cheers}</span>
+                    <span style={{ fontSize: '12px', color: '#4CAF50' }}>💰 {content.price}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+              <Link to="/ranking" className="btn">
+                전체 랭킹 보기 →
+              </Link>
+            </div>
+          </div>
+        );
+
+      case 'residentscenter':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              👥 현재 온라인 주민들을 만나보세요!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+              {[
+                { name: "MusicLover123", avatar: "🎵", level: "성숙 주민", activity: "음악 창작 중" },
+                { name: "ArtMaster", avatar: "🎨", level: "명예 시민", activity: "아트 갤러리 관람" },
+                { name: "DanceQueen", avatar: "💃", level: "활발 주민", activity: "댄스 연습 중" },
+                { name: "ComedyKing", avatar: "🎭", level: "신규 주민", activity: "코미디 쇼 관람" }
+              ].map((resident, index) => (
+                <div key={index} style={{ 
+                  background: 'rgba(76, 175, 80, 0.1)', 
+                  padding: '15px', 
+                  borderRadius: '15px',
+                  border: '2px solid rgba(76, 175, 80, 0.3)',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: '32px', marginBottom: '8px' }}>{resident.avatar}</div>
+                  <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', fontSize: '14px', marginBottom: '4px' }}>
+                    {resident.name}
+                  </h4>
+                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', fontSize: '12px', marginBottom: '4px' }}>
+                    {resident.level}
+                  </p>
+                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#4CAF50', fontSize: '11px' }}>
+                    {resident.activity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'badgehall':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              🏅 명예의 훈장을 확인하세요!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '15px' }}>
+              {[
+                { icon: "🌱", name: "신입 주민", earned: true },
+                { icon: "🎵", name: "활발한 주민", earned: false },
+                { icon: "⭐", name: "인기 주민", earned: false },
+                { icon: "👑", name: "명예 시민", earned: false }
+              ].map((badge, index) => (
+                <div key={index} style={{
+                  background: badge.earned ? 'rgba(156, 39, 176, 0.1)' : 'rgba(200, 200, 200, 0.1)',
+                  padding: '15px',
+                  borderRadius: '15px',
+                  border: `2px solid ${badge.earned ? 'rgba(156, 39, 176, 0.3)' : 'rgba(200, 200, 200, 0.3)'}`,
+                  textAlign: 'center',
+                  opacity: badge.earned ? 1 : 0.6
+                }}>
+                  <div style={{ fontSize: '32px', marginBottom: '8px' }}>{badge.icon}</div>
+                  <h4 style={{ 
+                    color: badge.earned ? '#2E7D32' : '#999', 
+                    fontFamily: 'Fredoka, sans-serif', 
+                    fontSize: '12px',
+                    marginBottom: '4px'
+                  }}>
+                    {badge.name}
+                  </h4>
+                  {badge.earned && (
+                    <div style={{ 
+                      fontSize: '10px',
+                      color: '#4CAF50',
+                      fontFamily: 'Quicksand, sans-serif',
+                      fontWeight: 'bold'
+                    }}>
+                      획득!
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'treasury':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              💰 마을 공동 금고 현황
+            </h3>
+            <RewardPoolPanel />
+          </div>
+        );
+
+      case 'artgallery':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              🎨 아티스트별 전용 마을을 탐험하세요!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+              {[
+                { name: "음악 마을", icon: "🎵", residents: 45, color: "#2196F3" },
+                { name: "아트 마을", icon: "🎨", residents: 32, color: "#E91E63" },
+                { name: "댄스 마을", icon: "💃", residents: 28, color: "#FF9800" },
+                { name: "코미디 마을", icon: "🎭", residents: 19, color: "#9C27B0" }
+              ].map((village, index) => (
+                <div key={index} style={{ 
+                  background: `rgba(${village.color === "#2196F3" ? "33, 150, 243" : 
+                                   village.color === "#E91E63" ? "233, 30, 99" :
+                                   village.color === "#FF9800" ? "255, 152, 0" : "156, 39, 176"}, 0.1)`, 
+                  padding: '15px', 
+                  borderRadius: '15px',
+                  border: `2px solid ${village.color}40`,
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: '32px', marginBottom: '8px' }}>{village.icon}</div>
+                  <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', fontSize: '14px', marginBottom: '4px' }}>
+                    {village.name}
+                  </h4>
+                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', fontSize: '12px' }}>
+                    주민 {village.residents}명
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'eventhall':
+        return (
+          <div>
+            <h3 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', marginBottom: '20px' }}>
+              🎊 실시간 이벤트를 확인하세요!
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px' }}>
+              {[
+                { title: "🎵 음악 창작 대회", time: "2일 남음", status: "진행중", participants: 45 },
+                { title: "🎨 아트 갤러리 전시", time: "1시간 전", status: "진행중", participants: 23 },
+                { title: "💃 댄스 배틀", time: "30분 후", status: "예정", participants: 12 },
+                { title: "🎭 코미디 쇼", time: "1일 후", status: "예정", participants: 8 }
+              ].map((event, index) => (
+                <div key={index} style={{ 
+                  background: 'rgba(244, 67, 54, 0.1)', 
+                  padding: '15px', 
+                  borderRadius: '15px',
+                  border: '2px solid rgba(244, 67, 54, 0.3)'
+                }}>
+                  <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', fontSize: '14px', marginBottom: '8px' }}>
+                    {event.title}
+                  </h4>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '12px', color: '#666' }}>⏰ {event.time}</span>
+                    <span style={{ fontSize: '12px', color: '#666' }}>👥 {event.participants}명</span>
+                  </div>
+                  <div style={{ 
+                    background: event.status === '진행중' ? '#4CAF50' : '#FF9800',
+                    color: 'white',
+                    padding: '4px 8px',
+                    borderRadius: '10px',
+                    fontSize: '10px',
+                    fontFamily: 'Quicksand, sans-serif',
+                    fontWeight: 'bold',
+                    textAlign: 'center'
+                  }}>
+                    {event.status}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      default:
+        return <div>건물 정보를 불러오는 중...</div>;
+    }
+  };
+
+  return (
+    <div>
+      {/* 마을 지도 */}
+      <div style={{ marginBottom: '30px' }}>
+        <VillageMap onBuildingClick={handleBuildingClick} />
       </div>
+
+      {/* 건물 모달 */}
+      <BuildingModal 
+        building={selectedBuilding}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      >
+        {selectedBuilding && renderBuildingContent(selectedBuilding)}
+      </BuildingModal>
     </div>
   );
 }
 
-export default Home;  
+export default Home;

@@ -66,13 +66,13 @@ function Navigation() {
         }}>
           <div style={{ display: 'flex', gap: '24px' }}>
             <Link 
-              to="/" 
+              to="/home" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/') ? '#667eea' : '#666',
-                fontWeight: isActive('/') ? '600' : '400',
+                color: isActive('/home') ? '#8bc34a' : '#666',
+                fontWeight: isActive('/home') ? '600' : '400',
                 padding: '8px 0',
-                borderBottom: isActive('/') ? '2px solid #667eea' : '2px solid transparent'
+                borderBottom: isActive('/home') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
               홈
@@ -81,37 +81,49 @@ function Navigation() {
               to="/upload" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/upload') ? '#667eea' : '#666',
+                color: isActive('/upload') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/upload') ? '600' : '400',
                 padding: '8px 0',
-                borderBottom: isActive('/upload') ? '2px solid #667eea' : '2px solid transparent'
+                borderBottom: isActive('/upload') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              콘텐츠 등록
+              🎵 음악 올리기
             </Link>
             <Link 
               to="/ranking" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/ranking') ? '#667eea' : '#666',
+                color: isActive('/ranking') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/ranking') ? '600' : '400',
                 padding: '8px 0',
-                borderBottom: isActive('/ranking') ? '2px solid #667eea' : '2px solid transparent'
+                borderBottom: isActive('/ranking') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              랭킹
+              🏆 마을 축제
             </Link>
             <Link 
               to="/collection" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/collection') ? '#667eea' : '#666',
+                color: isActive('/collection') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/collection') ? '600' : '400',
                 padding: '8px 0',
-                borderBottom: isActive('/collection') ? '2px solid #667eea' : '2px solid transparent'
+                borderBottom: isActive('/collection') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              마이페이지
+              🏠 내 집
+            </Link>
+            <Link 
+              to="/guide" 
+              style={{ 
+                textDecoration: 'none',
+                color: isActive('/guide') ? '#8bc34a' : '#666',
+                fontWeight: isActive('/guide') ? '600' : '400',
+                padding: '8px 0',
+                borderBottom: isActive('/guide') ? '2px solid #8bc34a' : '2px solid transparent'
+              }}
+            >
+              📖 마을 가이드
             </Link>
           </div>
 
@@ -135,19 +147,21 @@ function Navigation() {
               🔍
             </button>
 
-            {/* 응원권 표시 */}
+            {/* 마을 축제 참여권 표시 */}
             {cheerTokens > 0 && (
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
-                background: '#f8f9fa',
+                background: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
                 padding: '4px 8px',
-                borderRadius: '12px',
+                borderRadius: '15px',
                 fontSize: '14px',
-                color: '#333'
+                color: '#333',
+                border: '2px solid rgba(255, 183, 77, 0.3)',
+                boxShadow: '0 2px 8px rgba(255, 183, 77, 0.2)'
               }}>
-                <span>💖</span>
+                <span>🎫</span>
                 <span>{cheerTokens}</span>
               </div>
             )}
@@ -183,11 +197,11 @@ function Navigation() {
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <Link 
-              to="/" 
+              to="/home" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/') ? '#667eea' : '#666',
-                fontWeight: isActive('/') ? '600' : '400',
+                color: isActive('/home') ? '#8bc34a' : '#666',
+                fontWeight: isActive('/home') ? '600' : '400',
                 padding: '8px 0'
               }}
               onClick={() => setIsMenuOpen(false)}
@@ -198,37 +212,49 @@ function Navigation() {
               to="/upload" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/upload') ? '#667eea' : '#666',
+                color: isActive('/upload') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/upload') ? '600' : '400',
                 padding: '8px 0'
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              콘텐츠 등록
+              🎵 음악 올리기
             </Link>
             <Link 
               to="/ranking" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/ranking') ? '#667eea' : '#666',
+                color: isActive('/ranking') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/ranking') ? '600' : '400',
                 padding: '8px 0'
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              랭킹
+              🏆 마을 축제
             </Link>
             <Link 
               to="/collection" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/collection') ? '#667eea' : '#666',
+                color: isActive('/collection') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/collection') ? '600' : '400',
                 padding: '8px 0'
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              마이페이지
+              🏠 내 집
+            </Link>
+            <Link 
+              to="/guide" 
+              style={{ 
+                textDecoration: 'none',
+                color: isActive('/guide') ? '#8bc34a' : '#666',
+                fontWeight: isActive('/guide') ? '600' : '400',
+                padding: '8px 0'
+              }}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              📖 마을 가이드
             </Link>
             <div style={{ 
               display: 'flex', 
@@ -244,13 +270,15 @@ function Navigation() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  background: '#f8f9fa',
+                  background: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
                   padding: '4px 8px',
-                  borderRadius: '12px',
+                  borderRadius: '15px',
                   fontSize: '14px',
-                  color: '#333'
+                  color: '#333',
+                  border: '2px solid rgba(255, 183, 77, 0.3)',
+                  boxShadow: '0 2px 8px rgba(255, 183, 77, 0.2)'
                 }}>
-                  <span>💖</span>
+                  <span>🎫</span>
                   <span>{cheerTokens}</span>
                 </div>
               )}
