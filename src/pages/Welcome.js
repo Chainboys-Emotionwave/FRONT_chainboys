@@ -180,7 +180,6 @@ function Welcome() {
             fontWeight: '600',
             cursor: 'pointer',
             boxShadow: '0 8px 25px rgba(76, 175, 80, 0.4)',
-            transition: 'all 0.3s ease',
             fontFamily: 'Quicksand, sans-serif',
             textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
             transform: showElements ? 'scale(1)' : 'scale(0.8)',
