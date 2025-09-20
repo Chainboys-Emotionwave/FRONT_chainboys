@@ -713,6 +713,31 @@ p, h1, h2, h3, h4, h5, h6, span, div {
   overflow: hidden;
 }
 
+/* 투명 버튼 스타일 */
+.btn-transparent {
+  font-family: 'Quicksand', 'Nunito', sans-serif;
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: none !important;
+}
+
+.btn-transparent:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25) !important;
+}
+
 .btn::before {
   content: '';
   position: absolute;

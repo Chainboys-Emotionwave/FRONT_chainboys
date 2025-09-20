@@ -1,11 +1,11 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-// 데모용 창작자 랭킹 데이터
+// 데모용 마을 주민 랭킹 데이터
 const MOCK_CREATORS = [
   { 
     id: "1", 
-    nickname: "MusicLover123", 
+    nickname: "🎵 음악의 요정", 
     walletAddress: "0x1234...abcd",
     weeklyCheers: 15420, 
     totalCheers: 89200,
@@ -13,11 +13,12 @@ const MOCK_CREATORS = [
     category: "음악",
     contentCount: 15,
     badges: ["주간 챔피언", "응원 마스터"],
-    growthRate: 25.3
+    growthRate: 25.3,
+    character: "🎵"
   },
   { 
     id: "2", 
-    nickname: "DanceQueen", 
+    nickname: "💃 춤추는 꽃", 
     walletAddress: "0x5678...efgh",
     weeklyCheers: 12300, 
     totalCheers: 67800,
@@ -25,11 +26,12 @@ const MOCK_CREATORS = [
     category: "댄스",
     contentCount: 12,
     badges: ["댄스 마스터", "라이징 스타"],
-    growthRate: 18.7
+    growthRate: 18.7,
+    character: "💃"
   },
   { 
     id: "3", 
-    nickname: "ArtMaster", 
+    nickname: "🎨 그림쟁이", 
     walletAddress: "0x9abc...ijkl",
     weeklyCheers: 9870, 
     totalCheers: 45600,
@@ -37,11 +39,12 @@ const MOCK_CREATORS = [
     category: "아트",
     contentCount: 8,
     badges: ["아트 마스터"],
-    growthRate: 12.4
+    growthRate: 12.4,
+    character: "🎨"
   },
   { 
     id: "4", 
-    nickname: "BeatMaker", 
+    nickname: "🥁 리듬의 마법사", 
     walletAddress: "0xdef0...mnop",
     weeklyCheers: 8750, 
     totalCheers: 38900,
@@ -49,11 +52,12 @@ const MOCK_CREATORS = [
     category: "음악",
     contentCount: 10,
     badges: ["비트 마스터"],
-    growthRate: 8.9
+    growthRate: 8.9,
+    character: "🥁"
   },
   { 
     id: "5", 
-    nickname: "ComedyKing", 
+    nickname: "😄 웃음의 요리사", 
     walletAddress: "0x1234...qrst",
     weeklyCheers: 7200, 
     totalCheers: 32100,
@@ -61,11 +65,12 @@ const MOCK_CREATORS = [
     category: "코미디",
     contentCount: 6,
     badges: ["코미디 마스터"],
-    growthRate: 15.2
+    growthRate: 15.2,
+    character: "😄"
   },
   { 
     id: "6", 
-    nickname: "ChefMaster", 
+    nickname: "🍳 마을의 요리사", 
     walletAddress: "0x5678...uvwx",
     weeklyCheers: 6500, 
     totalCheers: 28900,
@@ -73,7 +78,8 @@ const MOCK_CREATORS = [
     category: "라이프스타일",
     contentCount: 9,
     badges: ["요리 마스터"],
-    growthRate: 22.1
+    growthRate: 22.1,
+    character: "🍳"
   }
 ];
 
@@ -142,10 +148,10 @@ function Ranking() {
       <div className="card hero-section">
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2rem' }}>
-            🏆 창작자 랭킹
+            🎪 마을 축제
           </h1>
           <p style={{ color: '#666', fontSize: '18px', marginBottom: '24px' }}>
-            팬들의 응원으로 결정되는 실시간 랭킹
+            마을 주민들의 응원으로 결정되는 실시간 랭킹
           </p>
           
           {/* 통계 카드 */}
@@ -164,7 +170,7 @@ function Ranking() {
               <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#e74c3c' }}>
                 {totalWeeklyCheers.toLocaleString()}
               </div>
-              <div style={{ fontSize: '12px', color: '#666' }}>주간 총 응원</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>주간 총총 응원</div>
             </div>
             <div style={{ 
               background: '#f8f9fa', 
@@ -195,7 +201,7 @@ function Ranking() {
       {/* 내 순위 (로그인 시에만 표시) */}
       {isWalletConnected && userRank && (
         <div className="card" style={{ 
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: 'linear-gradient(135deg, #aed581 0%, #ffb74d 100%)',
           color: 'white',
           marginBottom: '20px'
         }}>
@@ -221,12 +227,8 @@ function Ranking() {
                 </div>
               </div>
               <div style={{ flex: 1, textAlign: 'right' }}>
-                <Link to="/upload" className="btn" style={{ 
-                  background: 'rgba(255,255,255,0.2)', 
-                  color: 'white',
-                  border: '1px solid rgba(255,255,255,0.3)'
-                }}>
-                  📤 콘텐츠 등록하기
+                <Link to="/upload" className="btn-transparent">
+                  🛡️ 수호신 등록하기
                 </Link>
               </div>
             </div>
@@ -251,7 +253,7 @@ function Ranking() {
               style={{
                 padding: '12px 24px',
                 border: 'none',
-                background: activeTab === "weekly" ? '#667eea' : '#f8f9fa',
+                background: activeTab === "weekly" ? '#aed581' : '#f8f9fa',
                 color: activeTab === "weekly" ? 'white' : '#666',
                 borderRadius: '8px',
                 cursor: 'pointer',
@@ -265,7 +267,7 @@ function Ranking() {
               style={{
                 padding: '12px 24px',
                 border: 'none',
-                background: activeTab === "hallOfFame" ? '#667eea' : '#f8f9fa',
+                background: activeTab === "hallOfFame" ? '#aed581' : '#f8f9fa',
                 color: activeTab === "hallOfFame" ? 'white' : '#666',
                 borderRadius: '8px',
                 cursor: 'pointer',
@@ -347,15 +349,16 @@ function Ranking() {
                   width: '60px', 
                   height: '60px', 
                   borderRadius: '50%', 
-                  background: '#667eea',
+                  background: 'linear-gradient(135deg, #aed581 0%, #ffb74d 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'white',
-                  fontSize: '24px',
-                  fontWeight: 'bold'
+                  fontSize: '32px',
+                  fontWeight: 'bold',
+                  boxShadow: '0 4px 12px rgba(139, 195, 74, 0.3)'
                 }}>
-                  {creator.nickname.charAt(0).toUpperCase()}
+                  {creator.character}
                 </div>
 
                 {/* 정보 */}
@@ -375,7 +378,7 @@ function Ranking() {
                       <span 
                         key={idx}
                         style={{
-                          background: '#667eea',
+                          background: '#aed581',
                           color: 'white',
                           padding: '2px 8px',
                           borderRadius: '12px',
@@ -448,7 +451,7 @@ function Ranking() {
                   <div style={{ 
                     width: '40px',
                     height: `${height}px`,
-                    background: index < 3 ? '#ffc107' : '#667eea',
+                    background: index < 3 ? '#ffc107' : '#aed581',
                     borderRadius: '4px 4px 0 0',
                     transition: 'height 0.5s ease',
                     animation: `growUp 0.5s ease ${index * 0.1}s forwards`
