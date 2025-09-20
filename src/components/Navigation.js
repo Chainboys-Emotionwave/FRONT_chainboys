@@ -87,7 +87,7 @@ function Navigation() {
                 borderBottom: isActive('/upload') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              🎵 음악 올리기
+              🛡️ 수호신 등록
             </Link>
             <Link 
               to="/ranking" 
@@ -99,7 +99,7 @@ function Navigation() {
                 borderBottom: isActive('/ranking') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              🏆 마을 축제
+              🎪 마을 축제
             </Link>
             <Link 
               to="/collection" 
@@ -218,7 +218,7 @@ function Navigation() {
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              🎵 음악 올리기
+              🛡️ 수호신 등록
             </Link>
             <Link 
               to="/ranking" 
@@ -230,7 +230,7 @@ function Navigation() {
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              🏆 마을 축제
+              🎪 마을 축제
             </Link>
             <Link 
               to="/collection" 

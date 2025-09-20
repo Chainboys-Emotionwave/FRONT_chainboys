@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// 데모용 진행 중인 챌린지 데이터
+// 데모용 진행 중인 마을 축제 데이터
 const ACTIVE_CHALLENGES = [
   {
     id: "challenge_1",
-    title: "🎵 2025 신곡 커버 챌린지",
-    description: "최신 K-POP 신곡을 커버해보세요!",
+    title: "🎵 빌보드 HOT100 커버 1등을 뽑아라!",
+    description: "가을을 맞아 마을에 새로운 선율을 선사해주세요!",
     endDate: "2025-02-15",
     reward: "1위: 2 ETH, 2-3위: 1 ETH, 4-10위: 0.5 ETH"
   },
   {
     id: "challenge_2", 
-    title: "💃 댄스 챌린지",
-    description: "트렌디한 댄스 영상을 올려보세요!",
+    title: "💃 방구석 스우파 챌린지!",
+    description: "본인과 어울리는 즐거운 춤을 춰보세요!",
     endDate: "2025-02-20",
     reward: "1위: 1.5 ETH, 2-5위: 0.8 ETH"
   }
@@ -116,10 +116,10 @@ function Upload() {
       <div className="card hero-section">
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2rem' }}>
-            📤 콘텐츠 등록
+            🛡️ 컨텐츠 등록
           </h1>
           <p style={{ color: '#666', fontSize: '18px', marginBottom: '24px' }}>
-            팬 창작물을 등록하고 보상 이벤트에 참여하세요
+            당신의 창작물로 마을 지도의 디자인을 업그레이드 시키세요!
           </p>
           
           {!isWalletConnected && (
@@ -131,7 +131,7 @@ function Upload() {
               marginBottom: '20px',
               color: '#856404'
             }}>
-              ⚠️ 콘텐츠 등록을 위해 지갑 연결이 필요합니다.
+              ⚠️ 마을 수호신 등록을 위해 지갑 연결이 필요합니다.
             </div>
           )}
         </div>
@@ -147,7 +147,7 @@ function Upload() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="예) 아이돌 커버송 메들리"
+              placeholder="예) 마을을 위한 아름다운 선율"
               maxLength={100}
               style={{ 
                 padding: '12px 16px', 
@@ -168,7 +168,7 @@ function Upload() {
               type="url"
               value={link}
               onChange={(e) => setLink(e.target.value)}
-              placeholder="https://www.youtube.com/watch?v=... 또는 https://www.tiktok.com/@..."
+              placeholder="https://www.youtube.com/watch?v=... 또는 https://www.tiktok.com/@... 또는 직접 파일 업로드"
               style={{ 
                 padding: '12px 16px', 
                 borderRadius: '8px', 
@@ -177,7 +177,7 @@ function Upload() {
               }}
             />
             <div style={{ fontSize: '12px', color: '#666' }}>
-              유튜브 또는 틱톡 링크를 입력해주세요
+              유튜브, 틱톡 링크 또는 직접 파일을 업로드해주세요
             </div>
           </label>
 
@@ -206,7 +206,7 @@ function Upload() {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="콘텐츠에 대한 간단한 설명을 입력하세요"
+              placeholder="마을 수호신이 될 창작물에 대한 설명을 입력하세요"
               rows={4}
               maxLength={1000}
               style={{ 
@@ -225,7 +225,7 @@ function Upload() {
           {/* 챌린지 참여 */}
           {ACTIVE_CHALLENGES.length > 0 && (
             <label style={{ display: 'grid', gap: '8px' }}>
-              <span style={{ fontWeight: 600, fontSize: '16px' }}>챌린지 참여 (선택)</span>
+              <span style={{ fontWeight: 600, fontSize: '16px' }}>마을 축제 참여 (선택)</span>
               <select
                 value={selectedChallenge}
                 onChange={(e) => setSelectedChallenge(e.target.value)}
@@ -236,7 +236,7 @@ function Upload() {
                   fontSize: '16px'
                 }}
               >
-                <option value="">챌린지에 참여하지 않음</option>
+                <option value="">마을 축제에 참여하지 않음</option>
                 {ACTIVE_CHALLENGES.map(challenge => (
                   <option key={challenge.id} value={challenge.id}>
                     {challenge.title} (마감: {challenge.endDate})
@@ -272,7 +272,7 @@ function Upload() {
                 fontWeight: '600'
               }}
             >
-              {submitting ? '등록 중...' : '등록하기'}
+              {submitting ? '수호신 등록 중...' : '수호신 등록하기'}
             </button>
             <button 
               className="btn btn-secondary" 
@@ -325,30 +325,30 @@ function Upload() {
 
       {/* 가이드 섹션 */}
       <div className="card">
-        <h3 style={{ color: '#333', marginBottom: '16px' }}>📋 등록 가이드</h3>
+        <h3 style={{ color: '#333', marginBottom: '16px' }}>📋 마을 수호신 등록 가이드</h3>
         <div style={{ display: 'grid', gap: '12px' }}>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
             <span style={{ color: '#667eea', fontSize: '16px' }}>1️⃣</span>
             <span style={{ fontSize: '14px', color: '#666' }}>
-              유튜브 또는 틱톡에 영상을 업로드한 후 링크를 복사해주세요
+              유튜브, 틱톡에 영상을 업로드하거나 직접 파일을 업로드해주세요
             </span>
           </div>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
             <span style={{ color: '#667eea', fontSize: '16px' }}>2️⃣</span>
             <span style={{ fontSize: '14px', color: '#666' }}>
-              제목과 설명을 입력하여 다른 팬들이 쉽게 찾을 수 있도록 해주세요
+              제목과 설명을 입력하여 마을 주민들이 쉽게 찾을 수 있도록 해주세요
             </span>
           </div>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
             <span style={{ color: '#667eea', fontSize: '16px' }}>3️⃣</span>
             <span style={{ fontSize: '14px', color: '#666' }}>
-              진행 중인 챌린지에 참여하면 추가 보상을 받을 수 있습니다
+              진행 중인 마을 축제에 참여하면 추가 보상을 받을 수 있습니다
             </span>
           </div>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
             <span style={{ color: '#667eea', fontSize: '16px' }}>4️⃣</span>
             <span style={{ fontSize: '14px', color: '#666' }}>
-              등록된 콘텐츠는 다른 팬들의 응원을 받아 랭킹에 반영됩니다
+              등록된 수호신은 마을 주민들의 응원을 받아 랭킹에 반영됩니다
             </span>
           </div>
         </div>
