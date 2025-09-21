@@ -148,7 +148,7 @@ function Ranking() {
       <div className="card hero-section">
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2rem' }}>
-            🎪 마을 축제
+            🎪 전체 랭킹
           </h1>
           <p style={{ color: '#666', fontSize: '18px', marginBottom: '24px' }}>
             마을 주민들의 응원으로 결정되는 실시간 랭킹

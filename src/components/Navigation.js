@@ -78,16 +78,16 @@ function Navigation() {
               홈
             </Link>
             <Link 
-              to="/upload" 
+              to="/festival" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/upload') ? '#8bc34a' : '#666',
-                fontWeight: isActive('/upload') ? '600' : '400',
+                color: isActive('/festival') ? '#8bc34a' : '#666',
+                fontWeight: isActive('/festival') ? '600' : '400',
                 padding: '8px 0',
-                borderBottom: isActive('/upload') ? '2px solid #8bc34a' : '2px solid transparent'
+                borderBottom: isActive('/festival') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              🛡️ 수호신 등록
+              🎊 축제
             </Link>
             <Link 
               to="/ranking" 
@@ -99,7 +99,7 @@ function Navigation() {
                 borderBottom: isActive('/ranking') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              🎪 마을 축제
+              🏆 랭킹
             </Link>
             <Link 
               to="/collection" 
@@ -123,7 +123,7 @@ function Navigation() {
                 borderBottom: isActive('/guide') ? '2px solid #8bc34a' : '2px solid transparent'
               }}
             >
-              📖 마을 가이드
+              📖 가이드
             </Link>
           </div>
 
@@ -133,19 +133,31 @@ function Navigation() {
             alignItems: 'center', 
             gap: '16px' 
           }}>
-            <button 
-              style={{
-                background: 'none',
-                border: 'none',
-                fontSize: '18px',
-                cursor: 'pointer',
-                color: '#666',
-                padding: '8px'
-              }}
-              title="검색"
-            >
-              🔍
-            </button>
+            <Link to="/search">
+              <button 
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '18px',
+                  cursor: 'pointer',
+                  color: '#666',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  transition: 'all 0.2s ease'
+                }}
+                title="검색"
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#f5f5f5';
+                  e.target.style.color = '#8bc34a';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'none';
+                  e.target.style.color = '#666';
+                }}
+              >
+                🔍
+              </button>
+            </Link>
 
             {/* 마을 축제 참여권 표시 */}
             {cheerTokens > 0 && (
@@ -209,16 +221,16 @@ function Navigation() {
               홈
             </Link>
             <Link 
-              to="/upload" 
+              to="/festival" 
               style={{ 
                 textDecoration: 'none',
-                color: isActive('/upload') ? '#8bc34a' : '#666',
-                fontWeight: isActive('/upload') ? '600' : '400',
+                color: isActive('/festival') ? '#8bc34a' : '#666',
+                fontWeight: isActive('/festival') ? '600' : '400',
                 padding: '8px 0'
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              🛡️ 수호신 등록
+              🎊 축제
             </Link>
             <Link 
               to="/ranking" 
@@ -230,7 +242,7 @@ function Navigation() {
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              🎪 마을 축제
+              🏆 랭킹
             </Link>
             <Link 
               to="/collection" 
@@ -254,7 +266,7 @@ function Navigation() {
               }}
               onClick={() => setIsMenuOpen(false)}
             >
-              📖 마을 가이드
+              📖 가이드
             </Link>
             <div style={{ 
               display: 'flex', 
