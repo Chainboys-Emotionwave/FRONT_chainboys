@@ -89,7 +89,30 @@ function Search() {
   // 컴포넌트 마운트 시 URL 파라미터로 검색 실행
   useEffect(() => {
     if (searchQuery) {
-      performSearch(searchQuery);
+      if (!searchQuery.trim()) {
+        setSearchResults([]);
+        return;
+      }
+
+      setIsSearching(true);
+      
+      // 실제 검색 로직 (여기서는 간단한 문자열 매칭)
+      const lowerQuery = searchQuery.toLowerCase();
+      
+      const creatorResults = searchData.creators.filter(creator => 
+        creator.name.toLowerCase().includes(lowerQuery) ||
+        creator.category.toLowerCase().includes(lowerQuery)
+      ).map(creator => ({ ...creator, type: 'creator' }));
+
+      const contentResults = searchData.contents.filter(content => 
+        content.title.toLowerCase().includes(lowerQuery) ||
+        content.creator.toLowerCase().includes(lowerQuery) ||
+        content.category.toLowerCase().includes(lowerQuery)
+      ).map(content => ({ ...content, type: 'content' }));
+
+      const allResults = [...creatorResults, ...contentResults];
+      setSearchResults(allResults);
+      setIsSearching(false);
     }
   }, [searchQuery]);
 
