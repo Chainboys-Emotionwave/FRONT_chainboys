@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 function Search() {
@@ -8,7 +8,7 @@ function Search() {
   const [isSearching, setIsSearching] = useState(false);
 
   // 검색 데이터 (실제로는 API에서 가져올 데이터)
-  const searchData = {
+  const searchData = useMemo(() => ({
     creators: [
       { id: "c1", name: "ARMY_cover", profile: "🎵", followers: 1234, category: "K-POP" },
       { id: "c2", name: "IU_lover", profile: "🎤", followers: 987, category: "Ballad" },
@@ -48,7 +48,7 @@ function Search() {
       { id: "ct19", title: "K-POP 아이돌 일러스트", creator: "Kpop_illustrator", category: "Art", cheers: 187, uploadDate: "2025-01-12" },
       { id: "ct20", title: "BTS 코미디 스케치", creator: "ARMY_comedy", category: "Comedy", cheers: 156, uploadDate: "2025-01-15" }
     ]
-  };
+  }), []);
 
   // 검색 실행 함수
   const performSearch = (query) => {
