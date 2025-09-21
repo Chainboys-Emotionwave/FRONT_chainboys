@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 // 데모용 진행 중인 마을 축제 데이터
 const ACTIVE_CHALLENGES = [
   {
-    id: "challenge_1",
+    id: 1,
     title: "🎵 빌보드 HOT100 커버 1등을 뽑아라!",
     description: "가을을 맞아 마을에 새로운 선율을 선사해주세요!",
     endDate: "2025-02-15",
     reward: "1위: 2 ETH, 2-3위: 1 ETH, 4-10위: 0.5 ETH"
   },
   {
-    id: "challenge_2", 
+    id: 2, 
     title: "💃 방구석 스우파 챌린지!",
     description: "본인과 어울리는 즐거운 춤을 춰보세요!",
     endDate: "2025-02-20",
@@ -24,14 +24,21 @@ function Upload() {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedChallenge, setSelectedChallenge] = useState("");
-  const [category, setCategory] = useState("음악");
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const [category, setCategory] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [previewMeta, setPreviewMeta] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
 
-  const categories = ["음악", "댄스", "아트", "코미디", "라이프스타일", "기타"];
+  const categories = [
+    { name: "음악", id: 1 },
+    { name: "댄스", id: 2 },
+    { name: "아트", id: 3 },
+    { name: "코미디", id: 4 },
+    { name: "라이프스타일", id: 5 },
+    { name: "기타", id: 6 }
+  ];
 
   useEffect(() => {
     // 지갑 연결 상태 확인 (데모용)
@@ -78,17 +85,41 @@ function Upload() {
     try {
       setSubmitting(true);
       
-      // 실제 API 연동 전, 데모용 지연
-      await new Promise((r) => setTimeout(r, 1500));
+      // API 요청 데이터 구성
+      const requestData = {
+        title: title.trim(),
+        description: description.trim(),
+        contentUrl: link.trim(),
+        categoryId: category,
+        challangeId: selectedChallenge || null,
+        creatorId: 5 // 데모용 고정 값, 실제로는 로그인한 사용자 ID
+      };
+
+      // API 호출
+      const response = await fetch('http://localhost:8000/api/contents', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('API 응답:', result);
       
       setMessage("등록이 완료되었습니다! 🎉");
       
-      // 2초 후 콘텐츠 상세 페이지로 이동
+      // 2초 후 홈으로 이동
       setTimeout(() => {
         navigate("/");
       }, 2000);
       
     } catch (err) {
+      console.error('등록 오류:', err);
       setMessage("등록 중 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setSubmitting(false);
@@ -96,6 +127,9 @@ function Upload() {
   };
 
   const buildBadgeMetadata = () => {
+    const selectedCategory = categories.find(cat => cat.id === category);
+    const selectedChallengeData = selectedChallenge ? ACTIVE_CHALLENGES.find(c => c.id === selectedChallenge) : null;
+    
     const metadata = {
       name: `Badge - ${title || 'Untitled'}`,
       description: description || '팬 활동 뱃지',
@@ -103,8 +137,8 @@ function Upload() {
       attributes: [
         { trait_type: 'Platform', value: 'EmotionWave' },
         { trait_type: 'Type', value: 'SBT' },
-        { trait_type: 'Category', value: category },
-        ...(selectedChallenge ? [{ trait_type: 'Challenge', value: selectedChallenge }] : [])
+        { trait_type: 'Category', value: selectedCategory?.name || 'Unknown' },
+        ...(selectedChallengeData ? [{ trait_type: 'Challenge', value: selectedChallengeData.title }] : [])
       ]
     };
     setPreviewMeta(metadata);
@@ -186,7 +220,7 @@ function Upload() {
             <span style={{ fontWeight: 600, fontSize: '16px' }}>카테고리</span>
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setCategory(parseInt(e.target.value))}
               style={{ 
                 padding: '12px 16px', 
                 borderRadius: '8px', 
@@ -195,7 +229,7 @@ function Upload() {
               }}
             >
               {categories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
               ))}
             </select>
           </label>
@@ -227,8 +261,8 @@ function Upload() {
             <label style={{ display: 'grid', gap: '8px' }}>
               <span style={{ fontWeight: 600, fontSize: '16px' }}>마을 축제 참여 (선택)</span>
               <select
-                value={selectedChallenge}
-                onChange={(e) => setSelectedChallenge(e.target.value)}
+                value={selectedChallenge || ""}
+                onChange={(e) => setSelectedChallenge(e.target.value ? parseInt(e.target.value) : null)}
                 style={{ 
                   padding: '12px 16px', 
                   borderRadius: '8px', 

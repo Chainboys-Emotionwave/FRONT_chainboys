@@ -91,7 +91,7 @@ function Search() {
     if (searchQuery) {
       performSearch(searchQuery);
     }
-  }, []);
+  }, [searchQuery]);
 
   // 검색 결과 렌더링
   const renderSearchResults = () => {

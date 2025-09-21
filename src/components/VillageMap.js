@@ -304,7 +304,6 @@ function VillageMap({ onBuildingClick }) {
       clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
       '&::before': {
         content: '""',
-        position: 'absolute',
         top: '-2px',
         left: '-2px',
         right: '-2px',
