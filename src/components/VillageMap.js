@@ -26,10 +26,10 @@ function VillageMap({ onBuildingClick }) {
     },
     {
       id: 'festivalground',
-      name: '축제장',
+      name: '랭킹 라운지',
       image: '🏆',
       position: { top: '45%', left: '10%' },
-      description: '랭킹과 축제',
+      description: '랭킹과 순위',
       color: '#FF9800',
       size: 'large',
       buildingType: 'festival'
@@ -76,10 +76,10 @@ function VillageMap({ onBuildingClick }) {
     },
     {
       id: 'eventhall',
-      name: '이벤트홀',
+      name: '축제 홀',
       image: '🎊',
       position: { top: '80%', right: '10%' },
-      description: '실시간 이벤트',
+      description: '축제와 이벤트',
       color: '#F44336',
       size: 'medium',
       buildingType: 'event'

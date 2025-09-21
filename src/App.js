@@ -8,6 +8,8 @@ import Upload from "./pages/Upload";
 import ContentDetail from "./pages/ContentDetail";
 import Admin from "./pages/Admin";
 import VillageGuide from "./pages/VillageGuide";
+import Festival from "./pages/Festival";
+import Search from "./pages/Search";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -74,6 +76,30 @@ function App() {
               <main style={{ flex: 1 }}>
                 <div className="container">
                   <Ranking />
+                </div>
+              </main>
+              <Footer />
+            </div>
+          } />
+          
+          <Route path="/festival" element={
+            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+              <Navigation />
+              <main style={{ flex: 1 }}>
+                <div className="container">
+                  <Festival />
+                </div>
+              </main>
+              <Footer />
+            </div>
+          } />
+          
+          <Route path="/search" element={
+            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+              <Navigation />
+              <main style={{ flex: 1 }}>
+                <div className="container">
+                  <Search />
                 </div>
               </main>
               <Footer />
