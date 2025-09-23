@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-// 데모용 마을 주민 랭킹 데이터
+// 데모용 마을 주민 랭킹 데이터 (상위 10위)
 const MOCK_CREATORS = [
   { 
     id: "1", 
@@ -13,7 +13,6 @@ const MOCK_CREATORS = [
     category: "음악",
     contentCount: 15,
     badges: ["주간 챔피언", "응원 마스터"],
-    growthRate: 25.3,
     character: "🎵"
   },
   { 
@@ -26,7 +25,6 @@ const MOCK_CREATORS = [
     category: "댄스",
     contentCount: 12,
     badges: ["댄스 마스터", "라이징 스타"],
-    growthRate: 18.7,
     character: "💃"
   },
   { 
@@ -39,7 +37,6 @@ const MOCK_CREATORS = [
     category: "아트",
     contentCount: 8,
     badges: ["아트 마스터"],
-    growthRate: 12.4,
     character: "🎨"
   },
   { 
@@ -52,7 +49,6 @@ const MOCK_CREATORS = [
     category: "음악",
     contentCount: 10,
     badges: ["비트 마스터"],
-    growthRate: 8.9,
     character: "🥁"
   },
   { 
@@ -65,7 +61,6 @@ const MOCK_CREATORS = [
     category: "코미디",
     contentCount: 6,
     badges: ["코미디 마스터"],
-    growthRate: 15.2,
     character: "😄"
   },
   { 
@@ -78,8 +73,55 @@ const MOCK_CREATORS = [
     category: "라이프스타일",
     contentCount: 9,
     badges: ["요리 마스터"],
-    growthRate: 22.1,
     character: "🍳"
+  },
+  { 
+    id: "7", 
+    nickname: "🎭 연극의 달인", 
+    walletAddress: "0x9abc...yz12",
+    weeklyCheers: 5800, 
+    totalCheers: 25600,
+    profileImage: null,
+    category: "연극",
+    contentCount: 7,
+    badges: ["연극 마스터"],
+    character: "🎭"
+  },
+  { 
+    id: "8", 
+    nickname: "📸 사진작가", 
+    walletAddress: "0xdef0...3456",
+    weeklyCheers: 5200, 
+    totalCheers: 22300,
+    profileImage: null,
+    category: "사진",
+    contentCount: 11,
+    badges: ["포토 마스터"],
+    character: "📸"
+  },
+  { 
+    id: "9", 
+    nickname: "🎪 서커스 아티스트", 
+    walletAddress: "0x1234...7890",
+    weeklyCheers: 4800, 
+    totalCheers: 19800,
+    profileImage: null,
+    category: "서커스",
+    contentCount: 5,
+    badges: ["서커스 마스터"],
+    character: "🎪"
+  },
+  { 
+    id: "10", 
+    nickname: "🎨 디지털 아티스트", 
+    walletAddress: "0x5678...abcd",
+    weeklyCheers: 4200, 
+    totalCheers: 17500,
+    profileImage: null,
+    category: "아트",
+    contentCount: 13,
+    badges: ["디지털 마스터"],
+    character: "🎨"
   }
 ];
 
@@ -369,9 +411,6 @@ function Ranking() {
                   <div style={{ display: 'flex', gap: '16px', fontSize: '14px', color: '#666', marginBottom: '8px' }}>
                     <span>📂 {creator.category}</span>
                     <span>📝 콘텐츠 {creator.contentCount}개</span>
-                    <span style={{ color: creator.growthRate > 0 ? '#27ae60' : '#e74c3c' }}>
-                      📈 {creator.growthRate > 0 ? '+' : ''}{creator.growthRate}%
-                    </span>
                   </div>
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {creator.badges.map((badge, idx) => (
@@ -418,54 +457,204 @@ function Ranking() {
         </div>
       </div>
 
-      {/* 차트 섹션 */}
+      {/* 카테고리별 인기도 차트 섹션 */}
       <div className="card">
-        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 응원 트렌드</h3>
+        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 카테고리별 인기도</h3>
         <div style={{ 
-          background: '#f8f9fa', 
-          padding: '20px', 
-          borderRadius: '12px',
-          textAlign: 'center'
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '40px',
+          flexWrap: 'wrap',
+          justifyContent: 'center'
         }}>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-around', 
-            alignItems: 'end',
-            height: '200px',
-            gap: '16px'
-          }}>
-            {filteredAndRanked.slice(0, 5).map((creator, index) => {
-              const maxCheers = Math.max(...filteredAndRanked.slice(0, 5).map(c => 
-                activeTab === "weekly" ? c.weeklyCheers : c.totalCheers
-              ));
-              const currentCheers = activeTab === "weekly" ? creator.weeklyCheers : creator.totalCheers;
-              const height = (currentCheers / maxCheers) * 150;
-              
+          {/* 원그래프 */}
+          <div style={{ position: 'relative', width: '300px', height: '300px' }}>
+            <svg width="300" height="300" style={{ transform: 'rotate(-90deg)' }}>
+              {(() => {
+                // 카테고리별 총 응원 수 계산
+                const categoryData = categories
+                  .filter(cat => cat !== "전체")
+                  .map(category => {
+                    const categoryCreators = MOCK_CREATORS.filter(c => c.category === category);
+                    const totalCheers = categoryCreators.reduce((sum, creator) => {
+                      return sum + (activeTab === "weekly" ? creator.weeklyCheers : creator.totalCheers);
+                    }, 0);
+                    return { category, totalCheers, count: categoryCreators.length };
+                  })
+                  .sort((a, b) => b.totalCheers - a.totalCheers);
+
+                const totalCheers = categoryData.reduce((sum, item) => sum + item.totalCheers, 0);
+                const colors = ['#8bc34a', '#ff9800', '#e91e63', '#2196f3', '#9c27b0', '#f44336', '#00bcd4', '#4caf50'];
+                
+                let currentAngle = 0;
+                const radius = 120;
+                const centerX = 150;
+                const centerY = 150;
+
+                return categoryData.map((item, index) => {
+                  const percentage = (item.totalCheers / totalCheers) * 100;
+                  const angle = (item.totalCheers / totalCheers) * 360;
+                  const startAngle = currentAngle;
+                  const endAngle = currentAngle + angle;
+                  
+                  const x1 = centerX + radius * Math.cos((startAngle * Math.PI) / 180);
+                  const y1 = centerY + radius * Math.sin((startAngle * Math.PI) / 180);
+                  const x2 = centerX + radius * Math.cos((endAngle * Math.PI) / 180);
+                  const y2 = centerY + radius * Math.sin((endAngle * Math.PI) / 180);
+                  
+                  const largeArcFlag = angle > 180 ? 1 : 0;
+                  const pathData = [
+                    `M ${centerX} ${centerY}`,
+                    `L ${x1} ${y1}`,
+                    `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+                    'Z'
+                  ].join(' ');
+
+                  currentAngle += angle;
+
+                  return (
+                    <path
+                      key={item.category}
+                      d={pathData}
+                      fill={colors[index % colors.length]}
+                      stroke="white"
+                      strokeWidth="2"
+                      style={{ 
+                        opacity: 0.8,
+                        transition: 'opacity 0.3s ease',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.opacity = '1';
+                        e.target.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.opacity = '0.8';
+                        e.target.style.transform = 'scale(1)';
+                      }}
+                    />
+                  );
+                });
+              })()}
+            </svg>
+            
+            {/* 중앙 텍스트 */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              textAlign: 'center',
+              color: '#333'
+            }}>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '4px' }}>
+                {activeTab === "weekly" ? "주간" : "누적"}
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>
+                카테고리별<br />인기도
+              </div>
+            </div>
+          </div>
+
+          {/* 범례 */}
+          <div style={{ flex: 1, minWidth: '300px' }}>
+            {(() => {
+              const categoryData = categories
+                .filter(cat => cat !== "전체")
+                .map(category => {
+                  const categoryCreators = MOCK_CREATORS.filter(c => c.category === category);
+                  const totalCheers = categoryCreators.reduce((sum, creator) => {
+                    return sum + (activeTab === "weekly" ? creator.weeklyCheers : creator.totalCheers);
+                  }, 0);
+                  return { category, totalCheers, count: categoryCreators.length };
+                })
+                .sort((a, b) => b.totalCheers - a.totalCheers);
+
+              const totalCheers = categoryData.reduce((sum, item) => sum + item.totalCheers, 0);
+              const colors = ['#8bc34a', '#ff9800', '#e91e63', '#2196f3', '#9c27b0', '#f44336', '#00bcd4', '#4caf50'];
+
               return (
-                <div key={creator.id} style={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <div style={{ 
-                    width: '40px',
-                    height: `${height}px`,
-                    background: index < 3 ? '#ffc107' : '#aed581',
-                    borderRadius: '4px 4px 0 0',
-                    transition: 'height 0.5s ease',
-                    animation: `growUp 0.5s ease ${index * 0.1}s forwards`
-                  }}></div>
-                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#333' }}>
-                    {creator.nickname}
-                  </div>
-                  <div style={{ fontSize: '10px', color: '#666' }}>
-                    {currentCheers.toLocaleString()}
-                  </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {categoryData.map((item, index) => {
+                    const percentage = ((item.totalCheers / totalCheers) * 100).toFixed(1);
+                    return (
+                      <div key={item.category} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '12px',
+                        background: '#f8f9fa',
+                        borderRadius: '8px',
+                        border: '1px solid #e9ecef',
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#e8f5e8';
+                        e.currentTarget.style.transform = 'translateX(4px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = '#f8f9fa';
+                        e.currentTarget.style.transform = 'translateX(0)';
+                      }}>
+                        <div style={{
+                          width: '20px',
+                          height: '20px',
+                          borderRadius: '4px',
+                          background: colors[index % colors.length],
+                          flexShrink: 0
+                        }}></div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ 
+                            fontSize: '16px', 
+                            fontWeight: 'bold', 
+                            color: '#333',
+                            marginBottom: '2px'
+                          }}>
+                            {item.category}
+                          </div>
+                          <div style={{ 
+                            fontSize: '12px', 
+                            color: '#666' 
+                          }}>
+                            {item.count}명의 크리에이터
+                          </div>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
+                          <div style={{ 
+                            fontSize: '18px', 
+                            fontWeight: 'bold', 
+                            color: colors[index % colors.length]
+                          }}>
+                            {percentage}%
+                          </div>
+                          <div style={{ 
+                            fontSize: '12px', 
+                            color: '#666' 
+                          }}>
+                            {item.totalCheers.toLocaleString()} 응원
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               );
-            })}
+            })()}
           </div>
+        </div>
+        
+        {/* 추가 정보 */}
+        <div style={{ 
+          marginTop: '20px', 
+          padding: '16px', 
+          background: '#e8f4f8', 
+          borderRadius: '8px',
+          fontSize: '14px',
+          color: '#0c5460'
+        }}>
+          💡 <strong>인기도 계산 방식:</strong> 각 카테고리의 모든 크리에이터 응원 수를 합산하여 계산됩니다.
+          {activeTab === "weekly" ? " 주간 응원 수 기준으로 집계됩니다." : " 누적 응원 수 기준으로 집계됩니다."}
         </div>
       </div>
     </div>

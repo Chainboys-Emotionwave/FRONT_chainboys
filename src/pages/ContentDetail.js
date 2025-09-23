@@ -20,7 +20,6 @@ function ContentDetail() {
     cheers: 892,
     category: "음악",
     description: "팬이 직접 제작한 커버송 메들리입니다. 여러 인기곡을 아름다운 목소리로 커버한 작품으로, 많은 팬들의 사랑을 받고 있습니다.",
-    tags: ["커버", "발라드", "감성"],
     challenge: "🎵 2025 신곡 커버 챌린지"
   };
 
@@ -145,29 +144,6 @@ function ContentDetail() {
             </p>
           </div>
 
-          {/* 태그 */}
-          {content.tags && content.tags.length > 0 && (
-            <div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#333' }}>태그</h4>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {content.tags.map((tag, index) => (
-                  <span 
-                    key={index}
-                    style={{
-                      background: '#f8f9fa',
-                      color: '#667eea',
-                      padding: '4px 12px',
-                      borderRadius: '16px',
-                      fontSize: '14px',
-                      border: '1px solid #e9ecef'
-                    }}
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* 챌린지 참여 정보 */}
           {content.challenge && (

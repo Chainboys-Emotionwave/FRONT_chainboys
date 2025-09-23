@@ -10,6 +10,9 @@ import Admin from "./pages/Admin";
 import VillageGuide from "./pages/VillageGuide";
 import Festival from "./pages/Festival";
 import Search from "./pages/Search";
+import ProfileEdit from "./pages/ProfileEdit";
+import CreatorProfile from "./pages/CreatorProfile";
+import ContentEdit from "./pages/ContentEdit";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
@@ -70,6 +73,18 @@ function App() {
             </div>
           } />
           
+          <Route path="/profile-edit" element={
+            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+              <Navigation />
+              <main style={{ flex: 1 }}>
+                <div className="container">
+                  <ProfileEdit />
+                </div>
+              </main>
+              <Footer />
+            </div>
+          } />
+          
           <Route path="/ranking" element={
             <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <Navigation />
@@ -124,6 +139,30 @@ function App() {
                   <main style={{ flex: 1 }}>
                     <div className="container">
                       <VillageGuide />
+                    </div>
+                  </main>
+                  <Footer />
+                </div>
+              } />
+              
+              <Route path="/creator/:id" element={
+                <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+                  <Navigation />
+                  <main style={{ flex: 1 }}>
+                    <div className="container">
+                      <CreatorProfile />
+                    </div>
+                  </main>
+                  <Footer />
+                </div>
+              } />
+              
+              <Route path="/content-edit/:id" element={
+                <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+                  <Navigation />
+                  <main style={{ flex: 1 }}>
+                    <div className="container">
+                      <ContentEdit />
                     </div>
                   </main>
                   <Footer />

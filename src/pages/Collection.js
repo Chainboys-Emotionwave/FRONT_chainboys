@@ -6,6 +6,45 @@ function Collection() {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
 
+  // 이모지 마스터 데이터 (ProfileEdit.js와 동일)
+  const emojiMaster = [
+    { id: 1, emoji: "🧚", category: "fantasy", name: "요정" },
+    { id: 2, emoji: "🎵", category: "music", name: "음표" },
+    { id: 3, emoji: "🎤", category: "music", name: "마이크" },
+    { id: 4, emoji: "🎧", category: "music", name: "헤드폰" },
+    { id: 5, emoji: "🎸", category: "music", name: "기타" },
+    { id: 6, emoji: "🎹", category: "music", name: "피아노" },
+    { id: 7, emoji: "🥁", category: "music", name: "드럼" },
+    { id: 8, emoji: "🎺", category: "music", name: "트럼펫" },
+    { id: 9, emoji: "🎻", category: "music", name: "바이올린" },
+    { id: 10, emoji: "🎼", category: "music", name: "악보" },
+    // ... 더 많은 이모지들 (실제로는 API에서 가져올 데이터)
+  ];
+
+  // 색상 마스터 데이터 (ProfileEdit.js와 동일)
+  const colorMaster = [
+    { id: 1, gradient: "linear-gradient(135deg, #aed581 0%, #ffb74d 100%)", name: "자연" },
+    { id: 2, gradient: "linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%)", name: "바다" },
+    { id: 3, gradient: "linear-gradient(135deg, #ff7043 0%, #ff5722 100%)", name: "일몰" },
+    { id: 4, gradient: "linear-gradient(135deg, #ba68c8 0%, #9c27b0 100%)", name: "보라" },
+    { id: 5, gradient: "linear-gradient(135deg, #f06292 0%, #e91e63 100%)", name: "핑크" },
+    { id: 6, gradient: "linear-gradient(135deg, #4db6ac 0%, #009688 100%)", name: "청록" },
+    { id: 7, gradient: "linear-gradient(135deg, #ffd54f 0%, #ffc107 100%)", name: "황금" },
+    { id: 8, gradient: "linear-gradient(135deg, #90a4ae 0%, #607d8b 100%)", name: "은색" },
+    { id: 9, gradient: "linear-gradient(135deg, #ef5350 0%, #f44336 100%)", name: "빨강" },
+    { id: 10, gradient: "linear-gradient(135deg, #66bb6a 0%, #4caf50 100%)", name: "초록" },
+    { id: 11, gradient: "linear-gradient(135deg, #42a5f5 0%, #2196f3 100%)", name: "파랑" },
+    { id: 12, gradient: "linear-gradient(135deg, #ffa726 0%, #ff9800 100%)", name: "주황" },
+    { id: 13, gradient: "linear-gradient(135deg, #8e24aa 0%, #7b1fa2 100%)", name: "딥퍼플" },
+    { id: 14, gradient: "linear-gradient(135deg, #00acc1 0%, #0097a7 100%)", name: "시안" },
+    { id: 15, gradient: "linear-gradient(135deg, #5d4037 0%, #4e342e 100%)", name: "브라운" },
+    { id: 16, gradient: "linear-gradient(135deg, #795548 0%, #6d4c41 100%)", name: "라이트브라운" },
+    { id: 17, gradient: "linear-gradient(135deg, #607d8b 0%, #455a64 100%)", name: "블루그레이" },
+    { id: 18, gradient: "linear-gradient(135deg, #ff5722 0%, #d84315 100%)", name: "딥오렌지" },
+    { id: 19, gradient: "linear-gradient(135deg, #4caf50 0%, #388e3c 100%)", name: "딥그린" },
+    { id: 20, gradient: "linear-gradient(135deg, #3f51b5 0%, #303f9f 100%)", name: "인디고" }
+  ];
+
   // 데모용 사용자 데이터
   const userData = {
     nickname: "음악의 요정",
@@ -13,7 +52,8 @@ function Collection() {
     totalRewards: 2.45,
     totalCheers: 15420,
     totalBadges: 8,
-    profileImage: "🧚"
+    profileImageId: 1, // 요정 이모지 ID
+    profileColorId: 1  // 자연 색상 ID
   };
 
   // 방 가구 데이터
@@ -184,7 +224,6 @@ function Collection() {
                     <th style={{ padding: '12px', textAlign: 'left', color: '#666' }}>날짜</th>
                     <th style={{ padding: '12px', textAlign: 'left', color: '#666' }}>종류</th>
                     <th style={{ padding: '12px', textAlign: 'right', color: '#666' }}>보상액</th>
-                    <th style={{ padding: '12px', textAlign: 'center', color: '#666' }}>상태</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,17 +237,6 @@ function Collection() {
                       </td>
                       <td style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold', color: '#27ae60' }}>
                         {reward.amount} ETH
-                      </td>
-                      <td style={{ padding: '12px', textAlign: 'center' }}>
-                        <span style={{ 
-                          padding: '4px 8px', 
-                          borderRadius: '12px', 
-                          fontSize: '12px',
-                          background: reward.status === 'completed' ? '#d4edda' : '#fff3cd',
-                          color: reward.status === 'completed' ? '#155724' : '#856404'
-                        }}>
-                          {reward.status === 'completed' ? '완료' : '대기중'}
-                        </span>
                       </td>
                     </tr>
                   ))}
@@ -250,9 +278,9 @@ function Collection() {
                     <Link to={`/content/${content.id}`} className="btn btn-outline" style={{ fontSize: '14px', padding: '8px 16px' }}>
                       보기
                     </Link>
-                    <button className="btn btn-outline" style={{ fontSize: '14px', padding: '8px 16px' }}>
+                    <Link to={`/content-edit/${content.id}`} className="btn btn-outline" style={{ fontSize: '14px', padding: '8px 16px' }}>
                       수정
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -288,12 +316,9 @@ function Collection() {
                   </div>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>{badge.image}</div>
                   <h4 style={{ margin: '0 0 8px 0', color: '#333' }}>{badge.name}</h4>
-                  <p style={{ margin: '0 0 12px 0', color: '#666', fontSize: '14px' }}>
+                  <p style={{ margin: '0', color: '#666', fontSize: '14px' }}>
                     {badge.description}
                   </p>
-                  <div style={{ fontSize: '12px', color: '#999' }}>
-                    획득일: {badge.earnedDate}
-                  </div>
                 </div>
               ))}
             </div>
@@ -417,19 +442,24 @@ function Collection() {
             width: '80px', 
             height: '80px', 
             borderRadius: '50%', 
-            background: 'linear-gradient(135deg, #aed581 0%, #ffb74d 100%)',
+            background: colorMaster.find(color => color.id === userProfile?.profileColorId)?.gradient || 'linear-gradient(135deg, #aed581 0%, #ffb74d 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
             fontSize: '32px',
             fontWeight: 'bold',
-            boxShadow: '0 4px 12px rgba(174, 213, 129, 0.3)'
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
           }}>
-            {userProfile?.profileImage || userProfile?.nickname?.charAt(0) || '🎵'}
+            {emojiMaster.find(emoji => emoji.id === userProfile?.profileImageId)?.emoji || userProfile?.nickname?.charAt(0) || '🎵'}
           </div>
           <div style={{ flex: 1 }}>
-            <h1 style={{ margin: '0 0 8px 0', color: '#333' }}>{userProfile?.nickname}</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+              <h1 style={{ margin: 0, color: '#333' }}>{userProfile?.nickname}</h1>
+              <Link to="/profile-edit" className="btn btn-outline" style={{ fontSize: '12px', padding: '6px 12px' }}>
+                ✏️ 프로필 변경
+              </Link>
+            </div>
             <p style={{ margin: '0 0 16px 0', color: '#666', fontSize: '14px' }}>
               {userProfile?.walletAddress}
             </p>
