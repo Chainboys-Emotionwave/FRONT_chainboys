@@ -492,7 +492,6 @@ function Ranking() {
                 const centerY = 150;
 
                 return categoryData.map((item, index) => {
-                  const percentage = (item.totalCheers / totalCheers) * 100;
                   const angle = (item.totalCheers / totalCheers) * 360;
                   const startAngle = currentAngle;
                   const endAngle = currentAngle + angle;

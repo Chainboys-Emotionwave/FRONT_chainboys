@@ -158,7 +158,7 @@ function ProfileEdit() {
     setNickname(userData.nickname);
     setProfileImageId(userData.profileImageId);
     setProfileColorId(userData.profileColorId);
-  }, []);
+  }, [userData.nickname, userData.profileImageId, userData.profileColorId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
