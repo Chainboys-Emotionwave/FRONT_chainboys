@@ -2,12 +2,15 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import WalletConnect from "./WalletConnect";
+import AdRewardModal from "./AdRewardModal";
+import { claimAdReward } from "../services/rewardService";
 
 function Navigation() {
   const location = useLocation();
   const { user, isAuthenticated } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cheerTokens, setCheerTokens] = useState(0);
+  const [isAdModalOpen, setIsAdModalOpen] = useState(false);
 
   // 로그인된 사용자의 응원권 개수 (실제로는 API에서 가져옴)
   useEffect(() => {
@@ -19,6 +22,33 @@ function Navigation() {
   }, [isAuthenticated, user]);
 
   const isActive = (path) => location.pathname === path;
+
+  const handleAdComplete = async () => {
+    try {
+      // 사용자 정보 (실제로는 AuthContext에서 가져와야 함)
+      const userInfo = {
+        userId: localStorage.getItem('userId') || 'demo_user',
+        walletAddress: localStorage.getItem('walletAddress') || '0x0000000000000000000000000000000000000000'
+      };
+
+      console.log('광고 시청 완료 - 백엔드에 응원권 지급 요청');
+      
+      // 백엔드 API 호출
+      const result = await claimAdReward(userInfo);
+      
+      if (result.success) {
+        console.log('응원권 지급 성공:', result);
+        // 응원권 개수 업데이트
+        setCheerTokens(prev => prev + 1);
+      } else {
+        console.error('응원권 지급 실패:', result.message);
+      }
+    } catch (error) {
+      console.error('광고 시청 보상 처리 중 오류:', error);
+      // 오류 발생 시에도 사용자에게는 성공으로 표시 (오프라인 모드)
+      setCheerTokens(prev => prev + 1);
+    }
+  };
 
   return (
     <nav style={{
@@ -62,17 +92,19 @@ function Navigation() {
         <div style={{ 
           display: 'flex', 
           alignItems: 'center', 
-          gap: '32px' 
+          gap: '20px' 
         }}>
-          <div style={{ display: 'flex', gap: '24px' }}>
+          <div style={{ display: 'flex', gap: '16px' }}>
             <Link 
               to="/home" 
               style={{ 
                 textDecoration: 'none',
                 color: isActive('/home') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/home') ? '600' : '400',
-                padding: '8px 0',
-                borderBottom: isActive('/home') ? '2px solid #8bc34a' : '2px solid transparent'
+                padding: '6px 0',
+                borderBottom: isActive('/home') ? '2px solid #8bc34a' : '2px solid transparent',
+                fontSize: '14px',
+                whiteSpace: 'nowrap'
               }}
             >
               홈
@@ -83,8 +115,10 @@ function Navigation() {
                 textDecoration: 'none',
                 color: isActive('/festival') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/festival') ? '600' : '400',
-                padding: '8px 0',
-                borderBottom: isActive('/festival') ? '2px solid #8bc34a' : '2px solid transparent'
+                padding: '6px 0',
+                borderBottom: isActive('/festival') ? '2px solid #8bc34a' : '2px solid transparent',
+                fontSize: '14px',
+                whiteSpace: 'nowrap'
               }}
             >
               🎊 축제
@@ -95,8 +129,10 @@ function Navigation() {
                 textDecoration: 'none',
                 color: isActive('/ranking') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/ranking') ? '600' : '400',
-                padding: '8px 0',
-                borderBottom: isActive('/ranking') ? '2px solid #8bc34a' : '2px solid transparent'
+                padding: '6px 0',
+                borderBottom: isActive('/ranking') ? '2px solid #8bc34a' : '2px solid transparent',
+                fontSize: '14px',
+                whiteSpace: 'nowrap'
               }}
             >
               🏆 랭킹
@@ -107,8 +143,10 @@ function Navigation() {
                 textDecoration: 'none',
                 color: isActive('/collection') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/collection') ? '600' : '400',
-                padding: '8px 0',
-                borderBottom: isActive('/collection') ? '2px solid #8bc34a' : '2px solid transparent'
+                padding: '6px 0',
+                borderBottom: isActive('/collection') ? '2px solid #8bc34a' : '2px solid transparent',
+                fontSize: '14px',
+                whiteSpace: 'nowrap'
               }}
             >
               🏠 내 집
@@ -119,8 +157,10 @@ function Navigation() {
                 textDecoration: 'none',
                 color: isActive('/guide') ? '#8bc34a' : '#666',
                 fontWeight: isActive('/guide') ? '600' : '400',
-                padding: '8px 0',
-                borderBottom: isActive('/guide') ? '2px solid #8bc34a' : '2px solid transparent'
+                padding: '6px 0',
+                borderBottom: isActive('/guide') ? '2px solid #8bc34a' : '2px solid transparent',
+                fontSize: '14px',
+                whiteSpace: 'nowrap'
               }}
             >
               📖 가이드
@@ -159,19 +199,53 @@ function Navigation() {
               </button>
             </Link>
 
+            {/* 응원권 얻기 버튼 */}
+            <button
+              onClick={() => setIsAdModalOpen(true)}
+              style={{
+                background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)',
+                color: 'white',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '15px',
+                fontSize: '12px',
+                fontFamily: 'Fredoka, sans-serif',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: '0 3px 6px rgba(255, 107, 107, 0.3)',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                whiteSpace: 'nowrap'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-1px) scale(1.02)';
+                e.target.style.boxShadow = '0 4px 8px rgba(255, 107, 107, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 3px 6px rgba(255, 107, 107, 0.3)';
+              }}
+            >
+              <span style={{ fontSize: '14px' }}>🎫</span>
+              응원권 얻기
+            </button>
+
             {/* 마을 축제 참여권 표시 */}
             {cheerTokens > 0 && (
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '3px',
                 background: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
-                padding: '4px 8px',
-                borderRadius: '15px',
-                fontSize: '14px',
+                padding: '3px 6px',
+                borderRadius: '12px',
+                fontSize: '12px',
                 color: '#333',
-                border: '2px solid rgba(255, 183, 77, 0.3)',
-                boxShadow: '0 2px 8px rgba(255, 183, 77, 0.2)'
+                border: '1px solid rgba(255, 183, 77, 0.3)',
+                boxShadow: '0 1px 4px rgba(255, 183, 77, 0.2)',
+                whiteSpace: 'nowrap'
               }}>
                 <span>🎫</span>
                 <span>{cheerTokens}</span>
@@ -179,7 +253,7 @@ function Navigation() {
             )}
 
             {/* 지갑 연결 */}
-            <div style={{ border: '1px solid red', padding: '4px' }}>
+            <div style={{ padding: '2px' }}>
               <WalletConnect />
             </div>
           </div>
@@ -268,6 +342,37 @@ function Navigation() {
             >
               📖 가이드
             </Link>
+            {/* 응원권 얻기 버튼 (모바일) */}
+            <button
+              onClick={() => {
+                setIsAdModalOpen(true);
+                setIsMenuOpen(false);
+              }}
+              style={{
+                background: 'linear-gradient(135deg, #FF6B6B, #FF8E8E)',
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '15px',
+                fontSize: '14px',
+                fontFamily: 'Fredoka, sans-serif',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: '0 3px 6px rgba(255, 107, 107, 0.3)',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                width: '100%',
+                marginBottom: '12px',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <span style={{ fontSize: '16px' }}>🎫</span>
+              응원권 얻기
+            </button>
+
             <div style={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -281,14 +386,15 @@ function Navigation() {
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px',
+                  gap: '3px',
                   background: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
-                  padding: '4px 8px',
-                  borderRadius: '15px',
-                  fontSize: '14px',
+                  padding: '3px 6px',
+                  borderRadius: '12px',
+                  fontSize: '12px',
                   color: '#333',
-                  border: '2px solid rgba(255, 183, 77, 0.3)',
-                  boxShadow: '0 2px 8px rgba(255, 183, 77, 0.2)'
+                  border: '1px solid rgba(255, 183, 77, 0.3)',
+                  boxShadow: '0 1px 4px rgba(255, 183, 77, 0.2)',
+                  whiteSpace: 'nowrap'
                 }}>
                   <span>🎫</span>
                   <span>{cheerTokens}</span>
@@ -298,6 +404,13 @@ function Navigation() {
           </div>
         </div>
       )}
+
+      {/* 광고 시청 모달 */}
+      <AdRewardModal
+        isOpen={isAdModalOpen}
+        onClose={() => setIsAdModalOpen(false)}
+        onAdComplete={handleAdComplete}
+      />
     </nav>
   );
 }

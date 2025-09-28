@@ -148,7 +148,7 @@ function Ranking() {
       <div className="card hero-section">
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2rem' }}>
-            🎪 전체 랭킹
+            🎪 전체 랭킹 🎪
           </h1>
           <p style={{ color: '#666', fontSize: '18px', marginBottom: '24px' }}>
             마을 주민들의 응원으로 결정되는 실시간 랭킹
@@ -298,7 +298,7 @@ function Ranking() {
         {/* 랭킹 기간 정보 */}
         {activeTab === "weekly" && (
           <div style={{ 
-            background: '#e8f4f8', 
+            background: '#ffffff', 
             padding: '12px 16px', 
             borderRadius: '8px',
             marginBottom: '20px',
@@ -420,7 +420,7 @@ function Ranking() {
 
       {/* 차트 섹션 */}
       <div className="card">
-        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 응원 트렌드</h3>
+        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 카테고리별 인기</h3>
         <div style={{ 
           background: '#f8f9fa', 
           padding: '20px', 
@@ -429,42 +429,117 @@ function Ranking() {
         }}>
           <div style={{ 
             display: 'flex', 
-            justifyContent: 'space-around', 
-            alignItems: 'end',
-            height: '200px',
-            gap: '16px'
+            justifyContent: 'center', 
+            alignItems: 'center',
+            gap: '40px',
+            flexWrap: 'wrap'
           }}>
-            {filteredAndRanked.slice(0, 5).map((creator, index) => {
-              const maxCheers = Math.max(...filteredAndRanked.slice(0, 5).map(c => 
-                activeTab === "weekly" ? c.weeklyCheers : c.totalCheers
-              ));
-              const currentCheers = activeTab === "weekly" ? creator.weeklyCheers : creator.totalCheers;
-              const height = (currentCheers / maxCheers) * 150;
+            {(() => {
+              // 카테고리별 응원 수 집계
+              const categoryData = {};
+              filteredAndRanked.forEach(creator => {
+                const cheers = activeTab === "weekly" ? creator.weeklyCheers : creator.totalCheers;
+                if (!categoryData[creator.category]) {
+                  categoryData[creator.category] = 0;
+                }
+                categoryData[creator.category] += cheers;
+              });
+
+              const totalCheers = Object.values(categoryData).reduce((sum, cheers) => sum + cheers, 0);
+              const categories = Object.entries(categoryData).sort((a, b) => b[1] - a[1]);
+              const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'];
+              
+              // 하나의 원 그래프를 위한 conic-gradient 생성
+              let gradientParts = [];
+              let currentAngle = 0;
+              
+              categories.forEach(([category, cheers], index) => {
+                const percentage = (cheers / totalCheers) * 100;
+                const angle = (percentage / 100) * 360;
+                const color = colors[index % colors.length];
+                
+                gradientParts.push(`${color} ${currentAngle}deg ${currentAngle + angle}deg`);
+                currentAngle += angle;
+              });
+              
+              const gradientString = `conic-gradient(${gradientParts.join(', ')})`;
               
               return (
-                <div key={creator.id} style={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <div style={{ 
-                    width: '40px',
-                    height: `${height}px`,
-                    background: index < 3 ? '#ffc107' : '#aed581',
-                    borderRadius: '4px 4px 0 0',
-                    transition: 'height 0.5s ease',
-                    animation: `growUp 0.5s ease ${index * 0.1}s forwards`
-                  }}></div>
-                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#333' }}>
-                    {creator.nickname}
+                <>
+                  {/* 하나의 원 그래프 */}
+                  <div style={{
+                    width: '200px',
+                    height: '200px',
+                    borderRadius: '50%',
+                    background: gradientString,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                  }}>
+                    <div style={{
+                      width: '120px',
+                      height: '120px',
+                      borderRadius: '50%',
+                      background: 'white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      color: '#333',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                    }}>
+                      총 {totalCheers.toLocaleString()}
+                    </div>
                   </div>
-                  <div style={{ fontSize: '10px', color: '#666' }}>
-                    {currentCheers.toLocaleString()}
+                  
+                  {/* 범례 */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
+                    minWidth: '200px'
+                  }}>
+                    {categories.map(([category, cheers], index) => {
+                      const percentage = ((cheers / totalCheers) * 100).toFixed(1);
+                      const color = colors[index % colors.length];
+                      
+                      return (
+                        <div key={category} style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px'
+                        }}>
+                          <div style={{
+                            width: '16px',
+                            height: '16px',
+                            borderRadius: '50%',
+                            background: color
+                          }}></div>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ 
+                              fontSize: '14px', 
+                              fontWeight: 'bold',
+                              color: '#333'
+                            }}>
+                              {category}
+                            </div>
+                            <div style={{ 
+                              fontSize: '12px', 
+                              color: '#666'
+                            }}>
+                              {cheers.toLocaleString()} 응원 ({percentage}%)
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                </div>
+                </>
               );
-            })}
+            })()}
           </div>
         </div>
       </div>

@@ -246,7 +246,7 @@ function Upload() {
               
               {selectedChallenge && (
                 <div style={{ 
-                  background: '#e8f4f8', 
+                  background: '#ffffff', 
                   padding: '12px', 
                   borderRadius: '8px',
                   fontSize: '14px'

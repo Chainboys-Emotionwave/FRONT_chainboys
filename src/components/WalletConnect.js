@@ -188,10 +188,27 @@ function WalletConnect() {
           href="https://metamask.io/download/" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="btn btn-outline"
-          style={{ fontSize: '14px', padding: '8px 16px' }}
+          style={{
+            background: 'linear-gradient(135deg, #667eea, #764ba2)',
+            color: 'white',
+            border: 'none',
+            padding: '6px 12px',
+            borderRadius: '15px',
+            fontSize: '12px',
+            fontFamily: 'Fredoka, sans-serif',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            boxShadow: '0 3px 6px rgba(102, 126, 234, 0.3)',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap'
+          }}
         >
-          📥 MetaMask 설치
+          <span style={{ fontSize: '14px' }}>📥</span>
+          MetaMask 설치
         </a>
       </div>
     );
@@ -230,31 +247,82 @@ function WalletConnect() {
           {/* 네트워크 상태 */}
           {wrongNet && (
             <button 
-              className="btn btn-warning" 
-              onClick={switchToSepolia} 
-              style={{ padding: '6px 12px', fontSize: 12 }}
+              onClick={switchToSepolia}
+              style={{
+                background: 'linear-gradient(135deg, #ffc107, #ff8f00)',
+                color: 'white',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '15px',
+                fontSize: '12px',
+                fontFamily: 'Fredoka, sans-serif',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: '0 3px 6px rgba(255, 193, 7, 0.3)',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                whiteSpace: 'nowrap'
+              }}
             >
-              ⚠️ Sepolia 전환
+              <span style={{ fontSize: '14px' }}>⚠️</span>
+              Sepolia 전환
             </button>
           )}
 
           {/* 연결 해제 */}
           <button 
-            className="btn btn-outline" 
             onClick={disconnect}
-            style={{ padding: '6px 12px', fontSize: 12 }}
+            style={{
+              background: 'linear-gradient(135deg, #6c757d, #495057)',
+              color: 'white',
+              border: 'none',
+              padding: '6px 12px',
+              borderRadius: '15px',
+              fontSize: '12px',
+              fontFamily: 'Fredoka, sans-serif',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              boxShadow: '0 3px 6px rgba(108, 117, 125, 0.3)',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              whiteSpace: 'nowrap'
+            }}
           >
+            <span style={{ fontSize: '14px' }}>🔌</span>
             연결 해제
           </button>
         </div>
       ) : (
         <button 
-          className="btn btn-primary" 
           onClick={connect}
           disabled={isConnecting || isLoading}
-          style={{ fontSize: '14px', padding: '8px 16px' }}
+          style={{
+            background: isConnecting || isLoading 
+              ? 'linear-gradient(135deg, #6c757d, #495057)' 
+              : 'linear-gradient(135deg, #667eea, #764ba2)',
+            color: 'white',
+            border: 'none',
+            padding: '6px 12px',
+            borderRadius: '15px',
+            fontSize: '12px',
+            fontFamily: 'Fredoka, sans-serif',
+            fontWeight: 'bold',
+            cursor: isConnecting || isLoading ? 'not-allowed' : 'pointer',
+            boxShadow: '0 3px 6px rgba(102, 126, 234, 0.3)',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            whiteSpace: 'nowrap',
+            opacity: isConnecting || isLoading ? 0.7 : 1
+          }}
         >
-          {isConnecting || isLoading ? '연결 중...' : '🔗 지갑 연결'}
+          <span style={{ fontSize: '14px' }}>🔗</span>
+          {isConnecting || isLoading ? '연결 중...' : '지갑 연결'}
         </button>
       )}
       

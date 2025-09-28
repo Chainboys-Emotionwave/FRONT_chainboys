@@ -172,7 +172,7 @@ function ContentDetail() {
           {/* 챌린지 참여 정보 */}
           {content.challenge && (
             <div style={{
-              background: '#e8f4f8',
+              background: '#ffffff',
               padding: '16px',
               borderRadius: '8px',
               border: '1px solid #b8daff'

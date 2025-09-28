@@ -12,6 +12,7 @@ import Festival from "./pages/Festival";
 import Search from "./pages/Search";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import "./App.css";
 
 function App() {
   return (
