@@ -55,6 +55,7 @@ function Home() {
     setSelectedCategory(category);
   };
 
+
   // 카테고리별 게시물 데이터
   const categoryPosts = {
     music: [
@@ -124,7 +125,7 @@ function Home() {
                   <li>마을 발전에 적극적으로 참여해주세요</li>
                 </ul>
               </div>
-              <div style={{ background: 'rgba(33, 150, 243, 0.1)', padding: '20px', borderRadius: '15px' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '20px', borderRadius: '15px' }}>
                 <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif' }}>🗺️ 마을 가이드</h4>
                 <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666' }}>
                   EmotionWave Village에서의 즐거운 생활을 위한 가이드입니다.
@@ -144,7 +145,7 @@ function Home() {
               🎵 음악실에서 창작의 시간을 가져보세요!
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-              <div style={{ background: 'rgba(33, 150, 243, 0.1)', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
                 <div style={{ fontSize: '48px', marginBottom: '10px' }}>🎤</div>
                 <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif' }}>음악 업로드</h4>
                 <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', marginBottom: '15px' }}>

@@ -15,6 +15,7 @@ import CreatorProfile from "./pages/CreatorProfile";
 import ContentEdit from "./pages/ContentEdit";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import "./App.css";
 
 function App() {
   return (

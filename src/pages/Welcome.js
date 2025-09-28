@@ -24,7 +24,11 @@ function Welcome() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #87CEEB 0%, #98FB98 30%, #F0E68C 70%, #FFB6C1 100%)',
+      backgroundImage: 'url(./main_test_dark_25.jpg)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -33,86 +37,101 @@ function Welcome() {
       overflow: 'hidden',
       fontFamily: 'Nunito, sans-serif'
     }}>
-      {/* 배경 구름들 */}
+      {/* 배경 오버레이 */}
       <div style={{
         position: 'absolute',
-        top: '10%',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.3)',
+        zIndex: 1
+      }}></div>
+
+      {/* 구름들 - 상단~중간 영역에만 배치 */}
+      <div style={{
+        position: 'absolute',
+        top: '8%',
         left: '5%',
-        fontSize: '4rem',
-        opacity: 0.6,
-        animation: 'float 6s ease-in-out infinite',
-        transform: showElements ? 'translateY(0)' : 'translateY(-50px)',
-        transition: 'all 1s ease-out'
+        fontSize: '3.5rem',
+        opacity: 0.4,
+        animation: 'float 9s ease-in-out infinite',
+        transform: showElements ? 'translateY(0)' : 'translateY(-60px)',
+        transition: 'all 1.2s ease-out',
+        zIndex: 2
       }}>☁️</div>
-      
+
       <div style={{
         position: 'absolute',
         top: '20%',
-        right: '10%',
-        fontSize: '3rem',
+        right: '8%',
+        fontSize: '2.8rem',
         opacity: 0.5,
-        animation: 'float 8s ease-in-out infinite reverse',
-        transform: showElements ? 'translateY(0)' : 'translateY(-30px)',
-        transition: 'all 1.2s ease-out'
+        animation: 'float 7s ease-in-out infinite reverse',
+        transform: showElements ? 'translateY(0)' : 'translateY(-40px)',
+        transition: 'all 1.4s ease-out',
+        zIndex: 2
       }}>☁️</div>
 
       <div style={{
         position: 'absolute',
-        top: '15%',
-        left: '50%',
+        top: '35%',
+        left: '12%',
+        fontSize: '3.2rem',
+        opacity: 0.3,
+        animation: 'float 8s ease-in-out infinite',
+        transform: showElements ? 'translateY(0)' : 'translateY(-50px)',
+        transition: 'all 1.6s ease-out',
+        zIndex: 2
+      }}>☁️</div>
+
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        right: '15%',
         fontSize: '2.5rem',
         opacity: 0.4,
-        animation: 'float 7s ease-in-out infinite',
-        transform: showElements ? 'translateY(0)' : 'translateY(-40px)',
-        transition: 'all 1.1s ease-out'
+        animation: 'float 6s ease-in-out infinite reverse',
+        transform: showElements ? 'translateY(0)' : 'translateY(-35px)',
+        transition: 'all 1.8s ease-out',
+        zIndex: 2
       }}>☁️</div>
 
-      {/* 나무들 */}
       <div style={{
         position: 'absolute',
-        bottom: '10%',
+        top: '45%',
         left: '8%',
-        fontSize: '5rem',
-        transform: showElements ? 'translateY(0)' : 'translateY(50px)',
-        transition: 'all 1.5s ease-out'
-      }}>🌳</div>
+        fontSize: '3rem',
+        opacity: 0.3,
+        animation: 'float 10s ease-in-out infinite',
+        transform: showElements ? 'translateY(0)' : 'translateY(-45px)',
+        transition: 'all 2s ease-out',
+        zIndex: 2
+      }}>☁️</div>
 
       <div style={{
         position: 'absolute',
-        bottom: '15%',
-        right: '12%',
-        fontSize: '4rem',
-        transform: showElements ? 'translateY(0)' : 'translateY(40px)',
-        transition: 'all 1.3s ease-out'
-      }}>🌲</div>
+        top: '25%',
+        right: '25%',
+        fontSize: '2.2rem',
+        opacity: 0.5,
+        animation: 'float 9s ease-in-out infinite reverse',
+        transform: showElements ? 'translateY(0)' : 'translateY(-30px)',
+        transition: 'all 2.2s ease-out',
+        zIndex: 2
+      }}>☁️</div>
 
       <div style={{
         position: 'absolute',
-        bottom: '8%',
+        top: '40%',
         left: '60%',
-        fontSize: '3.5rem',
-        transform: showElements ? 'translateY(0)' : 'translateY(45px)',
-        transition: 'all 1.4s ease-out'
-      }}>🌳</div>
-
-      {/* 꽃들 */}
-      <div style={{
-        position: 'absolute',
-        bottom: '20%',
-        left: '25%',
-        fontSize: '2rem',
-        transform: showElements ? 'translateY(0)' : 'translateY(30px)',
-        transition: 'all 1.6s ease-out'
-      }}>🌸</div>
-
-      <div style={{
-        position: 'absolute',
-        bottom: '18%',
-        right: '30%',
-        fontSize: '1.8rem',
-        transform: showElements ? 'translateY(0)' : 'translateY(25px)',
-        transition: 'all 1.7s ease-out'
-      }}>🌺</div>
+        fontSize: '2.8rem',
+        opacity: 0.4,
+        animation: 'float 11s ease-in-out infinite',
+        transform: showElements ? 'translateY(0)' : 'translateY(-25px)',
+        transition: 'all 2.4s ease-out',
+        zIndex: 2
+      }}>☁️</div>
 
       {/* 메인 콘텐츠 */}
       <div style={{
@@ -128,14 +147,15 @@ function Welcome() {
         width: '100%',
         maxWidth: '1000px',
         margin: '0 auto',
-        padding: '0 20px'
+        padding: '0 20px',
+        position: 'relative'
       }}>
         {/* 마을 이름 */}
         <div style={{
           fontSize: 'clamp(2.5rem, 8vw, 4rem)',
           fontWeight: '700',
-          color: '#2E7D32',
-          textShadow: '3px 3px 0px #4CAF50, 6px 6px 0px #81C784',
+          color: '#FFFFFF',
+          textShadow: '2px 2px 4px rgba(0,0,0,0.8), 4px 4px 8px rgba(0,0,0,0.6)',
           marginBottom: '1rem',
           fontFamily: 'Fredoka, sans-serif',
           whiteSpace: 'nowrap'
@@ -146,10 +166,10 @@ function Welcome() {
         {/* 부제목 */}
         <div style={{
           fontSize: '1.5rem',
-          color: '#1B5E20',
+          color: '#E8F5E8',
           marginBottom: '3rem',
           fontWeight: '500',
-          textShadow: '1px 1px 2px rgba(255,255,255,0.8)'
+          textShadow: '1px 1px 3px rgba(0,0,0,0.8)'
         }}>
           감정을 나누는 음악 마을에 오신 것을 환영합니다! ✨
         </div>
@@ -157,11 +177,11 @@ function Welcome() {
         {/* 마을 설명 */}
         <div style={{
           fontSize: '1.1rem',
-          color: '#2E7D32',
+          color: '#F0F8F0',
           marginBottom: '4rem',
           maxWidth: '600px',
           lineHeight: '1.6',
-          textShadow: '1px 1px 2px rgba(255,255,255,0.6)',
+          textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
           textAlign: 'center'
         }}>
           마을에 입장하여 여러분의 감정을 음악으로 표현해보세요! 🏡
@@ -173,17 +193,18 @@ function Welcome() {
           style={{
             background: 'linear-gradient(135deg, #4CAF50 0%, #81C784 100%)',
             color: 'white',
-            border: 'none',
+            border: '2px solid rgba(255,255,255,0.3)',
             padding: '20px 40px',
             borderRadius: '30px',
             fontSize: '1.3rem',
             fontWeight: '600',
             cursor: 'pointer',
-            boxShadow: '0 8px 25px rgba(76, 175, 80, 0.4)',
+            boxShadow: '0 8px 25px rgba(0,0,0,0.5), 0 4px 15px rgba(76, 175, 80, 0.3)',
             fontFamily: 'Quicksand, sans-serif',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
             transform: showElements ? 'scale(1)' : 'scale(0.8)',
-            transition: 'all 1.8s ease-out'
+            transition: 'all 1.8s ease-out',
+
           }}
           onMouseEnter={(e) => {
             e.target.style.transform = 'translateY(-3px) scale(1.05)';
@@ -207,7 +228,8 @@ function Welcome() {
         display: 'flex',
         gap: '2rem',
         opacity: showElements ? 1 : 0,
-        transition: 'all 2s ease-out'
+        transition: 'all 2s ease-out',
+        zIndex: 10
       }}>
         <div style={{ fontSize: '2rem', animation: 'bounce 2s ease-in-out infinite' }}>🎵</div>
         <div style={{ fontSize: '2rem', animation: 'bounce 2s ease-in-out infinite 0.2s' }}>🎶</div>
