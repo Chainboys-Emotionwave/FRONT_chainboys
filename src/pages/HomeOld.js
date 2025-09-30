@@ -81,7 +81,7 @@ function Home() {
   const [weather, setWeather] = useState("sunny"); // sunny, rainy, snowy
   const [onlineResidents, setOnlineResidents] = useState([
     { id: 1, name: "MusicLover123", avatar: "🎵", level: "성숙 주민", activity: "음악 창작 중" },
-    { id: 2, name: "ArtMaster", avatar: "🎨", level: "명예 시민", activity: "아트 갤러리 관람" },
+    { id: 2, name: "ArtMaster", avatar: "🎨", level: "명예 시민", activity: "음악실에서 활동" },
     { id: 3, name: "DanceQueen", avatar: "💃", level: "성장 주민", activity: "댄스 연습" },
     { id: 4, name: "BeatMaker", avatar: "🎧", level: "성숙 주민", activity: "비트 제작" },
     { id: 5, name: "ComedyKing", avatar: "🎭", level: "새싹 주민", activity: "코미디 스케치" }
@@ -1051,7 +1051,7 @@ function Home() {
               },
               {
                 id: 2,
-                title: "🎨 아트 갤러리 전시",
+                title: "🎵 음악실 공연",
                 description: "ArtMaster님의 신작 전시회가 열렸습니다",
                 time: "1시간 전",
                 status: "진행중",

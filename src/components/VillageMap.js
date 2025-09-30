@@ -10,7 +10,7 @@ function VillageMap({ onBuildingClick }) {
       image: '🏛️',
       position: { top: '15%', left: '20%' },
       description: '마을 소개와 가이드',
-      color: '#8BC34A',
+      color: '#9ACD32',  // 연두색
       size: 'large',
       buildingType: 'townhall'
     },
@@ -20,7 +20,7 @@ function VillageMap({ onBuildingClick }) {
       image: '🎵',
       position: { top: '25%', right: '15%' },
       description: '음악 업로드와 관리',
-      color: '#2196F3',
+      color: '#4169E1',  // 파란색
       size: 'medium',
       buildingType: 'music'
     },
@@ -30,7 +30,7 @@ function VillageMap({ onBuildingClick }) {
       image: '🏆',
       position: { top: '45%', left: '10%' },
       description: '랭킹과 순위',
-      color: '#FF9800',
+      color: '#FF8C00',  // 주황색
       size: 'large',
       buildingType: 'festival'
     },
@@ -40,7 +40,7 @@ function VillageMap({ onBuildingClick }) {
       image: '👥',
       position: { top: '60%', right: '20%' },
       description: '온라인 주민들',
-      color: '#4CAF50',
+      color: '#228B22',  // 진한 초록색
       size: 'medium',
       buildingType: 'residents'
     },
@@ -50,7 +50,7 @@ function VillageMap({ onBuildingClick }) {
       image: '🏅',
       position: { top: '75%', left: '25%' },
       description: '명예의 훈장',
-      color: '#9C27B0',
+      color: '#9370DB',  // 보라색
       size: 'small',
       buildingType: 'badge'
     },
@@ -60,19 +60,9 @@ function VillageMap({ onBuildingClick }) {
       image: '💰',
       position: { top: '35%', left: '50%' },
       description: '공동 금고',
-      color: '#FFC107',
+      color: '#FFD700',  // 노랑색
       size: 'small',
       buildingType: 'treasury'
-    },
-    {
-      id: 'artgallery',
-      name: '아트갤러리',
-      image: '🎨',
-      position: { top: '55%', right: '35%' },
-      description: '아티스트별 마을',
-      color: '#E91E63',
-      size: 'medium',
-      buildingType: 'gallery'
     },
     {
       id: 'eventhall',
@@ -98,56 +88,164 @@ function VillageMap({ onBuildingClick }) {
   const getBuildingComponent = (building) => {
     const size = getBuildingSize(building.size);
     
-    // 마을회관은 CSS로 렌더링
+    // 마을회관 - 고전적 정부청사
     if (building.buildingType === 'townhall') {
       return (
-        <div className="village-hall-container">
-          {/* 마을회관 기본 구조 */}
-          <div className="village-hall-base"></div>
-          
-          {/* 기둥들 */}
-          <div className="village-hall-column-left"></div>
-          <div className="village-hall-column-left-inner-1"></div>
-          <div className="village-hall-column-left-inner-2"></div>
-          <div className="village-hall-column-left-inner-3"></div>
-          <div className="village-hall-column-left-inner-4"></div>
-          
-          <div className="village-hall-column-right"></div>
-          <div className="village-hall-column-right-inner-1"></div>
-          <div className="village-hall-column-right-inner-2"></div>
-          <div className="village-hall-column-right-inner-3"></div>
-          <div className="village-hall-column-right-inner-4"></div>
-          
-          {/* 문 */}
-          <div className="village-hall-door"></div>
-          <div className="village-hall-door-knob-1"></div>
-          <div className="village-hall-door-knob-2"></div>
-          <div className="village-hall-door-line"></div>
-          
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 건물 본체 */}
+          <rect x="10" y="30" width="60" height="40" fill="#9ACD32" stroke="#7CB342" strokeWidth="2"/>
           {/* 지붕 */}
-          <div className="village-hall-roof"></div>
-          <div className="village-hall-roof-triangle"></div>
-          
-          {/* 간판 */}
-          <div className="village-hall-sign"></div>
-          <div className="village-hall-sign-text">
-            <span>마을 회관</span>
-          </div>
-          
+          <polygon points="5,30 40,10 75,30" fill="#DC143C" stroke="#B22222" strokeWidth="2"/>
+          {/* 기둥들 */}
+          <rect x="20" y="35" width="4" height="30" fill="#D2691E"/>
+          <rect x="56" y="35" width="4" height="30" fill="#D2691E"/>
+          {/* 문 */}
+          <rect x="35" y="50" width="10" height="20" fill="#654321"/>
+          <circle cx="42" cy="60" r="1" fill="#FFD700"/>
           {/* 창문들 */}
-          <div className="village-hall-window-1"></div>
-          <div className="village-hall-window-2"></div>
-          
+          <rect x="15" y="40" width="6" height="8" fill="#87CEEB"/>
+          <rect x="59" y="40" width="6" height="8" fill="#87CEEB"/>
           {/* 깃발 */}
-          <div className="village-hall-flag-union"></div>
-          <div className="village-hall-flag-pole"></div>
-          <div className="village-hall-flag"></div>
-          <div className="village-hall-flag-top"></div>
-        </div>
+          <rect x="65" y="15" width="8" height="6" fill="#FFD700"/>
+          <line x1="69" y1="15" x2="69" y2="30" stroke="#8B4513" strokeWidth="2"/>
+        </svg>
       );
     }
     
-    // 다른 건물들은 임시로 간단한 CSS로 표시 (나중에 교체 예정)
+    // 음악실 - 현대적 스튜디오
+    if (building.buildingType === 'music') {
+      return (
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 건물 본체 */}
+          <rect x="15" y="25" width="50" height="45" fill="#4169E1" stroke="#1E90FF" strokeWidth="2" rx="8"/>
+          {/* 지붕 */}
+          <rect x="10" y="20" width="60" height="10" fill="#FF6347" rx="5"/>
+          {/* 창문들 */}
+          <rect x="25" y="35" width="8" height="10" fill="#87CEEB" rx="2"/>
+          <rect x="47" y="35" width="8" height="10" fill="#87CEEB" rx="2"/>
+          {/* 문 */}
+          <rect x="35" y="55" width="10" height="15" fill="#1E90FF" rx="2"/>
+          {/* 음표 장식 */}
+          <circle cx="40" cy="30" r="3" fill="#FFD700"/>
+          <path d="M40,33 L40,45 M37,42 L43,42" stroke="#FFD700" strokeWidth="2" fill="none"/>
+        </svg>
+      );
+    }
+    
+    // 축제장 - 원형 콘서트홀
+    if (building.buildingType === 'festival') {
+      return (
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 원형 건물 */}
+          <circle cx="40" cy="45" r="25" fill="#FF8C00" stroke="#FF6347" strokeWidth="3"/>
+          {/* 지붕 */}
+          <polygon points="15,45 40,20 65,45" fill="#DC143C"/>
+          {/* 문 */}
+          <rect x="37" y="55" width="6" height="15" fill="#8B4513" rx="3"/>
+          {/* 깃발들 */}
+          <rect x="20" y="25" width="3" height="8" fill="#FFD700"/>
+          <rect x="57" y="25" width="3" height="8" fill="#FFD700"/>
+          <rect x="38" y="25" width="3" height="8" fill="#FFD700"/>
+          {/* 장식 */}
+          <circle cx="30" cy="40" r="2" fill="#FFD700"/>
+          <circle cx="50" cy="40" r="2" fill="#FFD700"/>
+        </svg>
+      );
+    }
+    
+    // 주민센터 - 친근한 커뮤니티 센터
+    if (building.buildingType === 'residents') {
+      return (
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 건물 본체 */}
+          <rect x="20" y="30" width="40" height="40" fill="#228B22" stroke="#006400" strokeWidth="2" rx="6"/>
+          {/* 지붕 */}
+          <rect x="15" y="25" width="50" height="8" fill="#8B4513" rx="4"/>
+          {/* 창문들 */}
+          <rect x="28" y="40" width="6" height="8" fill="#87CEEB" rx="2"/>
+          <rect x="46" y="40" width="6" height="8" fill="#87CEEB" rx="2"/>
+          {/* 문 */}
+          <rect x="36" y="55" width="8" height="15" fill="#654321" rx="2"/>
+          {/* 꽃 장식 */}
+          <circle cx="40" cy="35" r="2" fill="#FF69B4"/>
+          <circle cx="35" cy="37" r="1" fill="#FFB6C1"/>
+          <circle cx="45" cy="37" r="1" fill="#FFB6C1"/>
+          <circle cx="37" cy="40" r="1" fill="#FFB6C1"/>
+          <circle cx="43" cy="40" r="1" fill="#FFB6C1"/>
+        </svg>
+      );
+    }
+    
+    // 훈장관 - 고전적 기념관
+    if (building.buildingType === 'badge') {
+      return (
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 건물 본체 */}
+          <rect x="25" y="35" width="30" height="35" fill="#9370DB" stroke="#8A2BE2" strokeWidth="2"/>
+          {/* 지붕 */}
+          <polygon points="20,35 40,15 60,35" fill="#FFD700" stroke="#FFA500" strokeWidth="2"/>
+          {/* 기둥 */}
+          <rect x="38" y="40" width="4" height="25" fill="#DDA0DD"/>
+          {/* 문 */}
+          <rect x="35" y="55" width="10" height="15" fill="#8A2BE2" rx="2"/>
+          {/* 훈장 */}
+          <circle cx="40" cy="45" r="6" fill="#FFD700" stroke="#FFA500" strokeWidth="2"/>
+          <polygon points="40,39 42,45 40,51 38,45" fill="#FFA500"/>
+          <circle cx="40" cy="45" r="2" fill="#FF6347"/>
+        </svg>
+      );
+    }
+    
+    // 금고 - 견고한 보안 건물
+    if (building.buildingType === 'treasury') {
+      return (
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 건물 본체 */}
+          <rect x="20" y="30" width="40" height="40" fill="#FFD700" stroke="#FFA500" strokeWidth="3" rx="4"/>
+          {/* 지붕 */}
+          <rect x="15" y="25" width="50" height="8" fill="#708090" rx="4"/>
+          {/* 금고 문 */}
+          <rect x="30" y="45" width="20" height="20" fill="#2F4F4F" rx="10"/>
+          {/* 금고 손잡이 */}
+          <circle cx="40" cy="55" r="3" fill="#FFD700"/>
+          <rect x="38" y="52" width="4" height="6" fill="#FFA500"/>
+          {/* 보안등 */}
+          <circle cx="25" y="35" r="2" fill="#FF0000"/>
+          <circle cx="55" y="35" r="2" fill="#FF0000"/>
+          {/* 보안선 */}
+          <line x1="20" y1="40" x2="60" y2="40" stroke="#FF0000" strokeWidth="1" strokeDasharray="2,2"/>
+        </svg>
+      );
+    }
+    
+    
+    // 축제 홀 - 화려한 이벤트 건물
+    if (building.buildingType === 'event') {
+      return (
+        <svg width={size.width} height={size.height} viewBox="0 0 80 80" style={{ filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.3))' }}>
+          {/* 건물 본체 */}
+          <rect x="15" y="30" width="50" height="40" fill="#FF4500" stroke="#DC143C" strokeWidth="2" rx="6"/>
+          {/* 지붕 */}
+          <polygon points="10,30 40,10 70,30" fill="#FFD700" stroke="#FFA500" strokeWidth="2"/>
+          {/* 창문들 */}
+          <rect x="25" y="40" width="8" height="12" fill="#87CEEB" rx="2"/>
+          <rect x="47" y="40" width="8" height="12" fill="#87CEEB" rx="2"/>
+          {/* 문 */}
+          <rect x="35" y="55" width="10" height="15" fill="#8B4513" rx="2"/>
+          {/* 축제 깃발들 */}
+          <rect x="20" y="20" width="2" height="6" fill="#FFD700"/>
+          <rect x="58" y="20" width="2" height="6" fill="#FFD700"/>
+          <rect x="39" y="20" width="2" height="6" fill="#FFD700"/>
+          <rect x="25" y="20" width="2" height="6" fill="#FF6347"/>
+          <rect x="53" y="20" width="2" height="6" fill="#FF6347"/>
+          {/* 장식 */}
+          <circle cx="30" cy="45" r="2" fill="#FFD700"/>
+          <circle cx="50" cy="45" r="2" fill="#FFD700"/>
+        </svg>
+      );
+    }
+    
+    // 기본 건물 (fallback)
     return (
       <div style={{
         width: size.width,
