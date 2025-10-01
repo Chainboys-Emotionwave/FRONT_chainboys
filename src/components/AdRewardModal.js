@@ -146,14 +146,6 @@ const AdRewardModal = ({ isOpen, onClose, onAdComplete }) => {
                   boxShadow: '0 4px 8px rgba(76, 175, 80, 0.3)',
                   transition: 'all 0.3s ease'
                 }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 6px 12px rgba(76, 175, 80, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
-                }}
               >
                 광고 시청 시작하기
               </button>
@@ -292,12 +284,6 @@ const AdRewardModal = ({ isOpen, onClose, onAdComplete }) => {
                 fontFamily: 'Fredoka, sans-serif',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#e0e0e0';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#f5f5f5';
               }}
             >
               {isCompleted ? '확인' : '나중에 하기'}

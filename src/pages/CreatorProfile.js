@@ -380,57 +380,6 @@ function CreatorProfile() {
         </div>
       </div>
 
-      {/* 소셜 링크 */}
-      {creator.socialLinks && (
-        <div className="card" style={{ marginBottom: '24px' }}>
-          <h3 style={{ margin: '0 0 16px 0', color: '#333' }}>🔗 소셜 링크</h3>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            {Object.entries(creator.socialLinks).map(([platform, link]) => {
-              const platformEmoji = {
-                youtube: '📺',
-                instagram: '📷',
-                twitter: '🐦',
-                tiktok: '🎵',
-                artstation: '🎨'
-              };
-              
-              return (
-                <a 
-                  key={platform}
-                  href={link.startsWith('http') ? link : `https://${platform}.com/${link.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '8px 16px',
-                    background: '#f8f9fa',
-                    borderRadius: '20px',
-                    textDecoration: 'none',
-                    color: '#333',
-                    border: '1px solid #e9ecef',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = '#aed581';
-                    e.target.style.color = 'white';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = '#f8f9fa';
-                    e.target.style.color = '#333';
-                  }}
-                >
-                  <span>{platformEmoji[platform] || '🔗'}</span>
-                  <span style={{ fontSize: '14px', fontWeight: 'bold' }}>
-                    {platform.charAt(0).toUpperCase() + platform.slice(1)}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       {/* 크리에이터 콘텐츠 */}
       <div className="card">
@@ -453,12 +402,7 @@ function CreatorProfile() {
                 transition: 'transform 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}>
+>
                 <div style={{
                   width: '100%',
                   height: '200px',
@@ -494,14 +438,35 @@ function CreatorProfile() {
                     color: '#666',
                     marginBottom: '12px'
                   }}>
-                    <span>👀 {content.views.toLocaleString()} 조회</span>
+                    <span>📅 {formatDate(content.uploadDate)}</span>
                     <span>🎉 {content.cheers.toLocaleString()} 응원</span>
                   </div>
-                  <div style={{ 
-                    fontSize: '12px', 
-                    color: '#999' 
-                  }}>
-                    업로드: {formatDate(content.uploadDate)}
+                  <div style={{ textAlign: 'center' }}>
+                    <Link 
+                      to={`/content/${content.id}`}
+                      style={{
+                        background: 'linear-gradient(135deg, #4CAF50, #45a049)',
+                        color: 'white',
+                        textDecoration: 'none',
+                        padding: '6px 12px',
+                        borderRadius: '15px',
+                        fontSize: '12px',
+                        fontFamily: 'Fredoka, sans-serif',
+                        fontWeight: 'bold',
+                        transition: 'all 0.3s ease',
+                        display: 'inline-block'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-1px)';
+                        e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = 'none';
+                      }}
+                    >
+                      콘텐츠 상세 보기
+                    </Link>
                   </div>
                 </div>
               </div>

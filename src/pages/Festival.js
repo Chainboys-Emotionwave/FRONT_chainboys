@@ -189,14 +189,6 @@ function Festival() {
               boxShadow: '0 4px 8px rgba(76, 175, 80, 0.3)',
               transition: 'all 0.3s ease'
             }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 6px 12px rgba(76, 175, 80, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
-            }}
           >
             ← 축제 목록으로 돌아가기
           </button>
@@ -285,16 +277,6 @@ function Festival() {
                 cursor: 'pointer',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
               }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-5px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-                e.target.style.borderColor = '#4CAF50';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                e.target.style.borderColor = '#e9ecef';
-              }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                   <div style={{ 
@@ -362,7 +344,8 @@ function Festival() {
                 <div style={{ 
                   display: 'flex', 
                   justifyContent: 'space-between', 
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  marginBottom: '8px'
                 }}>
                   <span style={{ 
                     fontSize: '14px', 
@@ -385,16 +368,35 @@ function Festival() {
                       fontWeight: 'bold',
                       transition: 'all 0.3s ease'
                     }}
+                  >
+                    자세히 보기
+                  </Link>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <Link 
+                    to={`/creator/${content.creator}`}
+                    style={{
+                      background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                      color: 'white',
+                      textDecoration: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '15px',
+                      fontSize: '12px',
+                      fontFamily: 'Fredoka, sans-serif',
+                      fontWeight: 'bold',
+                      transition: 'all 0.3s ease',
+                      display: 'inline-block'
+                    }}
                     onMouseEnter={(e) => {
                       e.target.style.transform = 'translateY(-1px)';
-                      e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
+                      e.target.style.boxShadow = '0 4px 8px rgba(102, 126, 234, 0.3)';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.transform = 'translateY(0)';
                       e.target.style.boxShadow = 'none';
                     }}
                   >
-                    자세히 보기
+                    👤 창작자 프로필 방문하기
                   </Link>
                 </div>
               </div>
@@ -447,16 +449,6 @@ function Festival() {
               overflow: 'hidden'
             }}
             onClick={() => handleFestivalClick(festival)}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-10px)';
-              e.target.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
-              e.target.style.borderColor = '#4CAF50';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-              e.target.style.borderColor = '#e9ecef';
-            }}
           >
             {/* 축제 썸네일 */}
             <div style={{ 
@@ -560,7 +552,16 @@ function Festival() {
                 fontWeight: 'bold',
                 display: 'inline-block',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 4px 15px rgba(76, 175, 80, 0.3)'
+                boxShadow: '0 4px 15px rgba(76, 175, 80, 0.3)',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 20px rgba(76, 175, 80, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 15px rgba(76, 175, 80, 0.3)';
               }}>
                 축제 참여하기 →
               </div>

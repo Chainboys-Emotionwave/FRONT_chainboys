@@ -82,6 +82,7 @@ function Ranking() {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [userRank, setUserRank] = useState(null);
+  const [userBadges, setUserBadges] = useState([]);
 
   useEffect(() => {
     // 지갑 연결 상태 확인 (데모용)
@@ -94,6 +95,14 @@ function Ranking() {
       totalRank: 45,
       totalCheers: 18900
     });
+    
+    // 사용자 뱃지 정보 (데모용)
+    setUserBadges([
+      { id: "1", name: "신입 주민", icon: "🌱", earned: true },
+      { id: "2", name: "활발한 주민", icon: "🎵", earned: true },
+      { id: "3", name: "인기 주민", icon: "⭐", earned: false },
+      { id: "4", name: "명예 시민", icon: "👑", earned: false }
+    ]);
   }, []);
 
   const categories = ["전체", ...new Set(MOCK_CREATORS.map(c => c.category))];
@@ -164,7 +173,7 @@ function Ranking() {
               <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#e74c3c' }}>
                 {totalWeeklyCheers.toLocaleString()}
               </div>
-              <div style={{ fontSize: '12px', color: '#666' }}>주간 총총 응원</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>주간 총 응원</div>
             </div>
             <div style={{ 
               background: '#f8f9fa', 
@@ -222,7 +231,7 @@ function Ranking() {
               </div>
               <div style={{ flex: 1, textAlign: 'right' }}>
                 <Link to="/upload" className="btn-transparent">
-                  🛡️ 수호신 등록하기
+                  🛡️ 콘텐츠 등록하기
                 </Link>
               </div>
             </div>
@@ -319,12 +328,7 @@ function Ranking() {
                 transition: 'transform 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}>
+>
                 
                 {/* 순위 */}
                 <div style={{ 
@@ -365,7 +369,7 @@ function Ranking() {
                     <span>📝 콘텐츠 {creator.contentCount}개</span>
                   </div>
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {creator.badges.map((badge, idx) => (
+                    {userBadges.filter(badge => badge.earned).map((badge, idx) => (
                       <span 
                         key={idx}
                         style={{
@@ -376,7 +380,7 @@ function Ranking() {
                           fontSize: '12px'
                         }}
                       >
-                        {badge}
+                        {badge.name}
                       </span>
                     ))}
                   </div>

@@ -206,14 +206,6 @@ function Welcome() {
             transition: 'all 1.8s ease-out',
 
           }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = 'translateY(-3px) scale(1.05)';
-            e.target.style.boxShadow = '0 12px 35px rgba(76, 175, 80, 0.5)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = 'translateY(0) scale(1)';
-            e.target.style.boxShadow = '0 8px 25px rgba(76, 175, 80, 0.4)';
-          }}
         >
           🏡 마을에 입장하기
         </button>

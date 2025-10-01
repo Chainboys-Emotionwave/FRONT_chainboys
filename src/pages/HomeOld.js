@@ -202,14 +202,7 @@ function Home() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(139, 195, 74, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+>
                 <div style={{ fontSize: '32px', marginBottom: '8px' }}>{resident.avatar}</div>
                 <h3 style={{ 
                   color: '#2E7D32', 
@@ -307,14 +300,7 @@ function Home() {
                 transition: 'all 0.3s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-4px)';
-                e.target.style.boxShadow = `0 8px 25px ${badge.color}30`;
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = 'none';
-              }}>
+>
                 <div className="animated-icon" style={{ fontSize: '48px', marginBottom: '12px' }}>
                   {badge.icon}
                 </div>
@@ -445,14 +431,7 @@ function Home() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 183, 77, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+>
                 <div style={{ fontSize: '48px', marginBottom: '12px' }}>🎵</div>
                 <h3 style={{ 
                   color: '#2E7D32', 
@@ -482,14 +461,7 @@ function Home() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 183, 77, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+>
                 <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏆</div>
                 <h3 style={{ 
                   color: '#2E7D32', 
@@ -519,14 +491,7 @@ function Home() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 183, 77, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+>
                 <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏛️</div>
                 <h3 style={{ 
                   color: '#2E7D32', 
@@ -556,14 +521,7 @@ function Home() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 183, 77, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+>
                 <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏠</div>
                 <h3 style={{ 
                   color: '#2E7D32', 
@@ -658,14 +616,7 @@ function Home() {
                 position: 'relative',
                 overflow: 'hidden'
               }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-6px)';
-                e.target.style.boxShadow = `0 12px 30px ${village.color}30`;
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = 'none';
-              }}>
+>
                 {/* 마을 상태 배지 */}
                 <div style={{
                   position: 'absolute',
@@ -782,14 +733,7 @@ function Home() {
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.05)';
-                    e.target.style.boxShadow = `0 4px 15px ${village.color}50`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'scale(1)';
-                    e.target.style.boxShadow = 'none';
-                  }}>
+>
                     마을 입장하기 →
                   </button>
                 </div>
@@ -957,14 +901,7 @@ function Home() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(233, 30, 99, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+>
                 <div style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
@@ -1087,14 +1024,7 @@ function Home() {
                 position: 'relative',
                 overflow: 'hidden'
               }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-4px)';
-                e.target.style.boxShadow = `0 8px 25px ${event.color}30`;
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = 'none';
-              }}>
+>
                 {/* 이벤트 상태 배지 */}
                 <div style={{
                   position: 'absolute',
@@ -1197,14 +1127,7 @@ function Home() {
                     transition: 'all 0.3s ease',
                     width: '100%'
                   }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.02)';
-                    e.target.style.boxShadow = `0 4px 15px ${event.color}50`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'scale(1)';
-                    e.target.style.boxShadow = 'none';
-                  }}>
+>
                     {event.status === '진행중' ? '참여하기' : '알림 설정'}
                   </button>
                 </div>
@@ -1416,14 +1339,7 @@ function Home() {
               transition: 'transform 0.2s, box-shadow 0.2s',
               cursor: 'pointer'
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}>
+>
               <div style={{ padding: '20px', textAlign: 'center' }}>
                 <div style={{ fontSize: '48px', marginBottom: '12px' }}>{content.thumbnail}</div>
                 <h3 style={{ margin: '0 0 8px 0', fontSize: '1.1rem' }}>

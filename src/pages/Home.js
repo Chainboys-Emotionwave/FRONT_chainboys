@@ -176,7 +176,7 @@ function Home() {
               🏆 랭킹 라운지에서 마을의 인기 작품들을 확인하세요!
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
-              {POPULAR_CONTENTS.slice(0, 4).map((content) => (
+              {POPULAR_CONTENTS.slice(0, 3).map((content) => (
                 <div key={content.id} style={{ 
                   background: 'rgba(255, 183, 77, 0.1)', 
                   padding: '15px', 
@@ -186,8 +186,11 @@ function Home() {
                   <h4 style={{ color: '#2E7D32', fontFamily: 'Fredoka, sans-serif', fontSize: '14px', marginBottom: '8px' }}>
                     {content.title}
                   </h4>
-                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', fontSize: '12px', marginBottom: '8px' }}>
+                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', fontSize: '12px', marginBottom: '4px' }}>
                     by {content.creator}
+                  </p>
+                  <p style={{ fontFamily: 'Nunito, sans-serif', color: '#666', fontSize: '12px', marginBottom: '8px' }}>
+                    📂 {content.category}
                   </p>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ fontSize: '12px', color: '#FF9800' }}>🎫 {content.cheers}</span>
@@ -288,8 +291,6 @@ function Home() {
                   transition: 'transform 0.2s ease',
                   cursor: 'pointer'
                 }}
-                onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-                onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                     <div style={{ fontSize: '24px', marginRight: '10px' }}>{post.thumbnail}</div>
@@ -324,34 +325,6 @@ function Home() {
                   </div>
                 </div>
               ))}
-            </div>
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <button 
-                onClick={() => window.location.reload()} 
-                style={{
-                  background: 'linear-gradient(135deg, #4CAF50, #45a049)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '20px',
-                  fontSize: '14px',
-                  fontFamily: 'Fredoka, sans-serif',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 8px rgba(76, 175, 80, 0.3)',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 6px 12px rgba(76, 175, 80, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
-                }}
-              >
-                🎲 다른 추천 보기
-              </button>
             </div>
           </div>
         );
@@ -421,10 +394,10 @@ function Home() {
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px' }}>
               {[
-                { title: "🎪 K-POP 축제", time: "2일 남음", status: "진행중", participants: 156 },
-                { title: "🎵 음악 축제", time: "1시간 전", status: "진행중", participants: 89 },
-                { title: "💃 댄스 축제", time: "30분 후", status: "예정", participants: 67 },
-                { title: "🎭 문화 축제", time: "1일 후", status: "예정", participants: 45 }
+                { title: "🎪 K-POP 축제", endDate: "2025-01-20", participants: 156 },
+                { title: "🎵 음악 축제", endDate: "2025-01-18", participants: 89 },
+                { title: "💃 댄스 축제", endDate: "2025-01-25", participants: 67 },
+                { title: "🎭 문화 축제", endDate: "2025-01-22", participants: 45 }
               ].map((event, index) => (
                 <div key={index} style={{ 
                   background: 'rgba(244, 67, 54, 0.1)', 
@@ -436,20 +409,8 @@ function Home() {
                     {event.title}
                   </h4>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '12px', color: '#666' }}>⏰ {event.time}</span>
+                    <span style={{ fontSize: '12px', color: '#666' }}>📅 마감일: {event.endDate}</span>
                     <span style={{ fontSize: '12px', color: '#666' }}>👥 {event.participants}명</span>
-                  </div>
-                  <div style={{ 
-                    background: event.status === '진행중' ? '#4CAF50' : '#FF9800',
-                    color: 'white',
-                    padding: '4px 8px',
-                    borderRadius: '10px',
-                    fontSize: '10px',
-                    fontFamily: 'Quicksand, sans-serif',
-                    fontWeight: 'bold',
-                    textAlign: 'center'
-                  }}>
-                    {event.status}
                   </div>
                 </div>
               ))}

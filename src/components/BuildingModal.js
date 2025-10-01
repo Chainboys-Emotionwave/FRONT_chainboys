@@ -97,14 +97,6 @@ function BuildingModal({ building, isOpen, onClose, children }) {
               color: 'white',
               transition: 'all 0.3s ease'
             }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'rgba(255, 255, 255, 0.3)';
-              e.target.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'rgba(255, 255, 255, 0.2)';
-              e.target.style.transform = 'scale(1)';
-            }}
           >
             ✕
           </button>

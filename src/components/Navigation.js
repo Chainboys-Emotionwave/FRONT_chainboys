@@ -186,14 +186,6 @@ function Navigation() {
                   transition: 'all 0.2s ease'
                 }}
                 title="검색"
-                onMouseEnter={(e) => {
-                  e.target.style.background = '#f5f5f5';
-                  e.target.style.color = '#8bc34a';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'none';
-                  e.target.style.color = '#666';
-                }}
               >
                 🔍
               </button>
@@ -218,14 +210,6 @@ function Navigation() {
                 alignItems: 'center',
                 gap: '4px',
                 whiteSpace: 'nowrap'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-1px) scale(1.02)';
-                e.target.style.boxShadow = '0 4px 8px rgba(255, 107, 107, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0) scale(1)';
-                e.target.style.boxShadow = '0 3px 6px rgba(255, 107, 107, 0.3)';
               }}
             >
               <span style={{ fontSize: '14px' }}>🎫</span>

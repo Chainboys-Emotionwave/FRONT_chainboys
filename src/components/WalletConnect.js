@@ -206,6 +206,14 @@ function WalletConnect() {
             textDecoration: 'none',
             whiteSpace: 'nowrap'
           }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-1px)';
+            e.target.style.boxShadow = '0 4px 8px rgba(102, 126, 234, 0.3)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 3px 6px rgba(102, 126, 234, 0.3)';
+          }}
         >
           <span style={{ fontSize: '14px' }}>📥</span>
           MetaMask 설치
@@ -265,6 +273,14 @@ function WalletConnect() {
                 gap: '4px',
                 whiteSpace: 'nowrap'
               }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-1px)';
+                e.target.style.boxShadow = '0 4px 8px rgba(255, 193, 7, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 3px 6px rgba(255, 193, 7, 0.3)';
+              }}
             >
               <span style={{ fontSize: '14px' }}>⚠️</span>
               Sepolia 전환
@@ -290,6 +306,14 @@ function WalletConnect() {
               alignItems: 'center',
               gap: '4px',
               whiteSpace: 'nowrap'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'translateY(-1px)';
+              e.target.style.boxShadow = '0 4px 8px rgba(108, 117, 125, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 3px 6px rgba(108, 117, 125, 0.3)';
             }}
           >
             <span style={{ fontSize: '14px' }}>🔌</span>
@@ -319,6 +343,18 @@ function WalletConnect() {
             gap: '4px',
             whiteSpace: 'nowrap',
             opacity: isConnecting || isLoading ? 0.7 : 1
+          }}
+          onMouseEnter={(e) => {
+            if (!isConnecting && !isLoading) {
+              e.target.style.transform = 'translateY(-1px)';
+              e.target.style.boxShadow = '0 4px 8px rgba(102, 126, 234, 0.3)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isConnecting && !isLoading) {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 3px 6px rgba(102, 126, 234, 0.3)';
+            }
           }}
         >
           <span style={{ fontSize: '14px' }}>🔗</span>

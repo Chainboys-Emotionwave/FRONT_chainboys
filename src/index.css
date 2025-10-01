@@ -34,11 +34,6 @@ code {
   border: 2px solid rgba(139, 195, 74, 0.2);
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(139, 195, 74, 0.25);
-  border-color: rgba(139, 195, 74, 0.4);
-}
 
 .btn {
   font-family: 'Quicksand', 'Nunito', sans-serif;
@@ -267,15 +262,6 @@ nav a:hover {
   transition: opacity 0.3s ease;
 }
 
-.ranking-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(139, 195, 74, 0.2);
-  border-color: #8bc34a;
-}
-
-.ranking-item:hover::before {
-  opacity: 1;
-}
 
 .ranking-item.top-three {
   background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
@@ -690,12 +676,6 @@ p, h1, h2, h3, h4, h5, h6, span, div {
   animation: glow 3s ease-in-out infinite;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(139, 195, 74, 0.25);
-  border-color: rgba(139, 195, 74, 0.4);
-  animation: pulse 0.6s ease-in-out;
-}
 
 /* 버튼 애니메이션 */
 .btn {

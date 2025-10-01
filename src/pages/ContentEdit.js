@@ -306,33 +306,6 @@ function ContentEdit() {
         </div>
       </div>
 
-      {/* 미리보기 */}
-      <div className="card">
-        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>👀 미리보기</h3>
-        <div style={{
-          background: '#f8f9fa',
-          padding: '20px',
-          borderRadius: '12px',
-          border: '1px solid #e9ecef'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-            <div style={{ fontSize: '40px' }}>{content.thumbnail}</div>
-            <div style={{ flex: 1 }}>
-              <h4 style={{ margin: '0 0 4px 0', color: '#333' }}>
-                {formData.title || "제목을 입력하세요"}
-              </h4>
-              <div style={{ display: 'flex', gap: '12px', fontSize: '14px', color: '#666' }}>
-                <span>📂 {formData.category || "카테고리"}</span>
-                <span>📅 {content.uploadDate}</span>
-                <span>❤️ {content.cheers}</span>
-              </div>
-            </div>
-          </div>
-          <p style={{ margin: '0', color: '#666' }}>
-            {formData.description || "설명을 입력하세요"}
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

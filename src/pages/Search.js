@@ -198,16 +198,6 @@ function Search() {
                   cursor: 'pointer',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                 }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-5px)';
-                  e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-                  e.target.style.borderColor = '#4CAF50';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                  e.target.style.borderColor = '#e9ecef';
-                }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <div style={{ 
@@ -233,14 +223,6 @@ function Search() {
                       }}>
                         {creator.name}
                       </h4>
-                      <p style={{ 
-                        fontFamily: 'Nunito, sans-serif', 
-                        fontSize: '14px', 
-                        color: '#666',
-                        marginBottom: '5px'
-                      }}>
-                        팔로워 {creator.followers.toLocaleString()}명
-                      </p>
                     </div>
                   </div>
                   
@@ -272,18 +254,18 @@ function Search() {
                         fontFamily: 'Fredoka, sans-serif',
                         fontWeight: 'bold',
                         transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.transform = 'translateY(-1px)';
-                        e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.transform = 'translateY(0)';
-                        e.target.style.boxShadow = 'none';
-                      }}
-                    >
-                      프로필 보기
-                    </Link>
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-1px)';
+                e.target.style.boxShadow = '0 4px 8px rgba(76, 175, 80, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              프로필 보기
+            </Link>
                   </div>
                 </div>
               ))}
@@ -320,16 +302,6 @@ function Search() {
                   cursor: 'pointer',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                 }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-5px)';
-                  e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-                  e.target.style.borderColor = '#4CAF50';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                  e.target.style.borderColor = '#e9ecef';
-                }}
                 >
                   <h4 style={{ 
                     fontFamily: 'Fredoka, sans-serif', 
@@ -363,30 +335,12 @@ function Search() {
                     marginBottom: '10px'
                   }}>
                     <span style={{ 
-                      background: '#4CAF50', 
-                      color: 'white', 
-                      padding: '4px 8px', 
-                      borderRadius: '10px', 
-                      fontSize: '12px',
-                      fontFamily: 'Quicksand, sans-serif',
-                      fontWeight: 'bold'
-                    }}>
-                      {content.category}
-                    </span>
-                    <span style={{ 
                       fontFamily: 'Nunito, sans-serif', 
                       fontSize: '12px', 
                       color: '#999' 
                     }}>
-                      {content.uploadDate}
+                      📅 {content.uploadDate}
                     </span>
-                  </div>
-                  
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center'
-                  }}>
                     <span style={{ 
                       fontSize: '14px', 
                       color: '#FF9800',
@@ -395,6 +349,9 @@ function Search() {
                     }}>
                       🎫 {content.cheers} 응원
                     </span>
+                  </div>
+                  
+                  <div style={{ textAlign: 'center' }}>
                     <Link 
                       to={`/content/${content.id}`}
                       style={{
@@ -406,7 +363,8 @@ function Search() {
                         fontSize: '12px',
                         fontFamily: 'Fredoka, sans-serif',
                         fontWeight: 'bold',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        display: 'inline-block'
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = 'translateY(-1px)';

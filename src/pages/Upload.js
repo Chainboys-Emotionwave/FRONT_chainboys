@@ -150,7 +150,7 @@ function Upload() {
       <div className="card hero-section">
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <h1 style={{ color: '#333', marginBottom: '16px', fontSize: '2rem' }}>
-            🛡️ 컨텐츠 등록
+            🛡️ 콘텐츠 등록
           </h1>
           <p style={{ color: '#666', fontSize: '18px', marginBottom: '24px' }}>
             당신의 창작물로 마을 지도의 디자인을 업그레이드 시키세요!
@@ -165,7 +165,7 @@ function Upload() {
               marginBottom: '20px',
               color: '#856404'
             }}>
-              ⚠️ 마을 수호신 등록을 위해 지갑 연결이 필요합니다.
+              ⚠️ 마을 콘텐츠 등록을 위해 지갑 연결이 필요합니다.
             </div>
           )}
         </div>
@@ -306,7 +306,7 @@ function Upload() {
                 fontWeight: '600'
               }}
             >
-              {submitting ? '수호신 등록 중...' : '수호신 등록하기'}
+              {submitting ? '콘텐츠 등록 중...' : '콘텐츠 등록하기'}
             </button>
             <button 
               className="btn btn-secondary" 
@@ -359,31 +359,59 @@ function Upload() {
 
       {/* 가이드 섹션 */}
       <div className="card">
-        <h3 style={{ color: '#333', marginBottom: '16px' }}>📋 마을 수호신 등록 가이드</h3>
-        <div style={{ display: 'grid', gap: '12px' }}>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-            <span style={{ color: '#667eea', fontSize: '16px' }}>1️⃣</span>
-            <span style={{ fontSize: '14px', color: '#666' }}>
-              유튜브, 틱톡에 영상을 업로드하거나 직접 파일을 업로드해주세요
-            </span>
+        <h3 style={{ color: '#333', marginBottom: '16px' }}>📋 마을 콘텐츠 등록 가이드</h3>
+        <div style={{ display: 'grid', gap: '16px' }}>
+          <div style={{ 
+            background: '#f8f9fa', 
+            padding: '16px', 
+            borderRadius: '12px',
+            border: '1px solid #e9ecef'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#333', fontSize: '16px' }}>📝 콘텐츠 등록 방법</h4>
+            <p style={{ margin: '0', fontSize: '14px', color: '#666', lineHeight: '1.5' }}>
+              유튜브, 틱톡에 영상을 업로드한 후 링크를 입력하거나, 직접 파일을 업로드할 수 있습니다. 
+              제목과 설명을 명확하게 작성하여 마을 주민들이 쉽게 찾을 수 있도록 해주세요.
+            </p>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-            <span style={{ color: '#667eea', fontSize: '16px' }}>2️⃣</span>
-            <span style={{ fontSize: '14px', color: '#666' }}>
-              제목과 설명을 입력하여 마을 주민들이 쉽게 찾을 수 있도록 해주세요
-            </span>
+          
+          <div style={{ 
+            background: '#f8f9fa', 
+            padding: '16px', 
+            borderRadius: '12px',
+            border: '1px solid #e9ecef'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#333', fontSize: '16px' }}>🎊 축제 참여 혜택</h4>
+            <p style={{ margin: '0', fontSize: '14px', color: '#666', lineHeight: '1.5' }}>
+              진행 중인 마을 축제에 참여하면 추가 보상을 받을 수 있습니다. 
+              축제별로 다른 주제와 보상이 있으니 꼭 확인해보세요!
+            </p>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-            <span style={{ color: '#667eea', fontSize: '16px' }}>3️⃣</span>
-            <span style={{ fontSize: '14px', color: '#666' }}>
-              진행 중인 마을 축제에 참여하면 추가 보상을 받을 수 있습니다
-            </span>
+          
+          <div style={{ 
+            background: '#f8f9fa', 
+            padding: '16px', 
+            borderRadius: '12px',
+            border: '1px solid #e9ecef'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#333', fontSize: '16px' }}>🏆 랭킹 시스템</h4>
+            <p style={{ margin: '0', fontSize: '14px', color: '#666', lineHeight: '1.5' }}>
+              등록된 콘텐츠는 마을 주민들의 응원을 받아 랭킹에 반영됩니다. 
+              좋은 콘텐츠일수록 더 많은 응원을 받을 수 있어요!
+            </p>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-            <span style={{ color: '#667eea', fontSize: '16px' }}>4️⃣</span>
-            <span style={{ fontSize: '14px', color: '#666' }}>
-              등록된 수호신은 마을 주민들의 응원을 받아 랭킹에 반영됩니다
-            </span>
+          
+          <div style={{ 
+            background: '#f8f9fa', 
+            padding: '16px', 
+            borderRadius: '12px',
+            border: '1px solid #e9ecef'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#333', fontSize: '16px' }}>💡 팁</h4>
+            <p style={{ margin: '0', fontSize: '14px', color: '#666', lineHeight: '1.5' }}>
+              • 카테고리를 정확하게 선택하면 더 많은 사람들이 찾을 수 있어요<br/>
+              • 설명에는 콘텐츠의 특징과 느낌을 자세히 적어주세요<br/>
+              • 정기적으로 새로운 콘텐츠를 업로드하면 더 많은 응원을 받을 수 있어요
+            </p>
           </div>
         </div>
       </div>

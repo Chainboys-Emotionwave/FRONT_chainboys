@@ -92,7 +92,7 @@ function Collection() {
     },
     {
       id: "plant",
-      name: "마을 통계",
+      name: "내 집 통계",
       icon: "🪴",
       position: { x: 85, y: 85 },
       description: "마을 통계를 확인하세요",
@@ -168,7 +168,6 @@ function Collection() {
       id: "1",
       name: "주간 챔피언",
       description: "주간 랭킹 1위 달성",
-      rarity: "legendary",
       earnedDate: "2025-01-15",
       image: "🏆"
     },
@@ -176,7 +175,6 @@ function Collection() {
       id: "2",
       name: "라이징 스타",
       description: "첫 콘텐츠 등록",
-      rarity: "common",
       earnedDate: "2025-01-10",
       image: "⭐"
     },
@@ -184,7 +182,6 @@ function Collection() {
       id: "3",
       name: "응원 마스터",
       description: "1000개 이상 응원 받기",
-      rarity: "epic",
       earnedDate: "2025-01-12",
       image: "💖"
     },
@@ -192,7 +189,6 @@ function Collection() {
       id: "4",
       name: "챌린지 승자",
       description: "챌린지 우승",
-      rarity: "rare",
       earnedDate: "2025-01-08",
       image: "🎯"
     }
@@ -251,7 +247,7 @@ function Collection() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h3 style={{ margin: 0, color: '#333' }}>📝 내 콘텐츠</h3>
               <Link to="/upload" className="btn btn-primary">
-                🛡️ 새 수호신 등록
+                🛡️ 새 콘텐츠 등록
               </Link>
             </div>
             <div style={{ display: 'grid', gap: '16px' }}>
@@ -295,25 +291,11 @@ function Collection() {
               {userBadges.map(badge => (
                 <div key={badge.id} style={{ 
                   background: '#fff',
-                  border: `2px solid ${getRarityColor(badge.rarity)}`,
+                  border: '2px solid #e9ecef',
                   borderRadius: '12px',
                   padding: '20px',
-                  textAlign: 'center',
-                  position: 'relative'
+                  textAlign: 'center'
                 }}>
-                  <div style={{ 
-                    position: 'absolute',
-                    top: '8px',
-                    right: '8px',
-                    background: getRarityColor(badge.rarity),
-                    color: 'white',
-                    padding: '2px 8px',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: 'bold'
-                  }}>
-                    {getRarityName(badge.rarity)}
-                  </div>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>{badge.image}</div>
                   <h4 style={{ margin: '0 0 8px 0', color: '#333' }}>{badge.name}</h4>
                   <p style={{ margin: '0', color: '#666', fontSize: '14px' }}>
@@ -349,7 +331,7 @@ function Collection() {
       case 'stats':
         return (
           <div>
-            <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 마을 통계</h3>
+            <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>📊 내 집 통계</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
               <div style={{ 
                 background: '#f8f9fa', 
@@ -395,25 +377,6 @@ function Collection() {
     }
   };
 
-  const getRarityColor = (rarity) => {
-    switch (rarity) {
-      case 'legendary': return '#FFD700';
-      case 'epic': return '#9B59B6';
-      case 'rare': return '#3498DB';
-      case 'common': return '#95A5A6';
-      default: return '#95A5A6';
-    }
-  };
-
-  const getRarityName = (rarity) => {
-    switch (rarity) {
-      case 'legendary': return '레전더리';
-      case 'epic': return '에픽';
-      case 'rare': return '레어';
-      case 'common': return '커먼';
-      default: return '커먼';
-    }
-  };
 
   if (!isWalletConnected) {
     return (
@@ -607,28 +570,75 @@ function Collection() {
         </div>
       </div>
 
-      {/* 선택된 가구의 콘텐츠 */}
+      {/* 모달 오버레이 */}
       {selectedFurniture && (
-        <div className="card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3 style={{ margin: 0, color: '#333' }}>
-              {selectedFurniture.icon} {selectedFurniture.name}
-            </h3>
-            <button 
-              onClick={() => setSelectedFurniture(null)}
-              style={{
-                background: '#f8f9fa',
-                border: '1px solid #e9ecef',
-                borderRadius: '8px',
-                padding: '8px 16px',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
-            >
-              ✕ 닫기
-            </button>
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '20px'
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '20px',
+            padding: '30px',
+            maxWidth: '800px',
+            width: '100%',
+            maxHeight: '80vh',
+            overflow: 'auto',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+            position: 'relative'
+          }}>
+            {/* 모달 헤더 */}
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              marginBottom: '20px',
+              borderBottom: '1px solid #e9ecef',
+              paddingBottom: '15px'
+            }}>
+              <h3 style={{ margin: 0, color: '#333', fontSize: '24px' }}>
+                {selectedFurniture.icon} {selectedFurniture.name}
+              </h3>
+              <button 
+                onClick={() => setSelectedFurniture(null)}
+                style={{
+                  background: '#f8f9fa',
+                  border: '1px solid #e9ecef',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  cursor: 'pointer',
+                  fontSize: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#e9ecef';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = '#f8f9fa';
+                }}
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* 모달 콘텐츠 */}
+            <div style={{ maxHeight: '60vh', overflow: 'auto' }}>
+              {renderFurnitureContent()}
+            </div>
           </div>
-          {renderFurnitureContent()}
         </div>
       )}
     </div>

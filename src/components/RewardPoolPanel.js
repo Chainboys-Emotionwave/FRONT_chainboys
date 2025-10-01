@@ -121,8 +121,7 @@ function RewardPoolPanel() {
           {[
             { name: "MusicLover123", amount: "2.5 ETH", rank: 1 },
             { name: "ArtMaster", amount: "1.8 ETH", rank: 2 },
-            { name: "DanceQueen", amount: "1.2 ETH", rank: 3 },
-            { name: "ComedyKing", amount: "0.9 ETH", rank: 4 }
+            { name: "DanceQueen", amount: "1.2 ETH", rank: 3 }
           ].map((contributor) => (
             <div key={contributor.rank} style={{
               background: contributor.rank <= 3 ? 'rgba(255, 183, 77, 0.2)' : 'rgba(200, 200, 200, 0.2)',

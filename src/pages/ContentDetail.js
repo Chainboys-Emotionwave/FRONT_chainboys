@@ -104,6 +104,31 @@ function ContentDetail() {
               <div style={{ fontSize: '12px', color: '#666' }}>{content.creatorAddress}</div>
             </div>
           </div>
+          <Link 
+            to={`/creator/${content.creator}`}
+            style={{
+              background: 'linear-gradient(135deg, #667eea, #764ba2)',
+              color: 'white',
+              textDecoration: 'none',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              fontSize: '14px',
+              fontFamily: 'Fredoka, sans-serif',
+              fontWeight: 'bold',
+              transition: 'all 0.3s ease',
+              display: 'inline-block'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'translateY(-1px)';
+              e.target.style.boxShadow = '0 4px 8px rgba(102, 126, 234, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = 'none';
+            }}
+          >
+            👤 프로필 방문하기
+          </Link>
           <div style={{ fontSize: '14px', color: '#666' }}>
             📅 {content.createdAt}
           </div>
@@ -235,41 +260,6 @@ function ContentDetail() {
         </div>
       </div>
 
-      {/* 창작자의 다른 콘텐츠 */}
-      <div className="card">
-        <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>
-          {content.creator}의 다른 콘텐츠
-        </h3>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-          gap: '16px' 
-        }}>
-          {/* 데모용 다른 콘텐츠 */}
-          <div style={{ 
-            background: '#fff', 
-            border: '1px solid #e9ecef',
-            borderRadius: '8px', 
-            padding: '16px',
-            textAlign: 'center'
-          }}>
-            <div style={{ fontSize: '32px', marginBottom: '8px' }}>🎤</div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '14px' }}>댄스 커버</h4>
-            <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>❤️ 234</p>
-          </div>
-          <div style={{ 
-            background: '#fff', 
-            border: '1px solid #e9ecef',
-            borderRadius: '8px', 
-            padding: '16px',
-            textAlign: 'center'
-          }}>
-            <div style={{ fontSize: '32px', marginBottom: '8px' }}>🎨</div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '14px' }}>팬아트</h4>
-            <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>❤️ 156</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
