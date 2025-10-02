@@ -426,8 +426,42 @@ function Home() {
   return (
     <div>
       {/* 마을 지도 */}
-      <div style={{ marginBottom: '30px' }}>
+      <div style={{ marginBottom: '20px' }}>
         <VillageMap onBuildingClick={handleBuildingClick} />
+      </div>
+
+      {/* 지도 안내 텍스트 */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '20px'
+      }}>
+        <div style={{
+          background: 'rgba(255, 248, 220, 0.95)',
+          padding: '6px 20px',
+          borderRadius: '0',
+          border: '2px solid #8B4513',
+          boxShadow: `
+            0 0 0 1px #D2691E,
+            0 0 0 2px #CD853F,
+            0 4px 12px rgba(0,0,0,0.15)
+          `,
+          maxWidth: '500px',
+          width: 'fit-content',
+          whiteSpace: 'nowrap'
+        }}>
+          <p style={{
+            margin: 0,
+            color: '#8B4513',
+            fontFamily: 'Nunito, sans-serif',
+            fontSize: '12px',
+            fontWeight: 'bold',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+            textAlign: 'center'
+          }}>
+            EmotionWave 마을의 지도입니다. 건물을 클릭해보세요!
+          </p>
+        </div>
       </div>
 
       {/* 건물 모달 */}

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import authService from '../services/authService';
+import levelService from '../services/levelService';
 
 const AuthContext = createContext();
 
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userLevel, setUserLevel] = useState(null);
 
   // 초기 로드 시 토큰 검증
   useEffect(() => {
@@ -27,6 +29,10 @@ export const AuthProvider = ({ children }) => {
             if (userInfo) {
               setUser(userInfo);
               setIsAuthenticated(true);
+              // 사용자 레벨 계산 (게시물 수 기반)
+              const postCount = userInfo.postCount || 0;
+              const level = levelService.calculateLevel(postCount);
+              setUserLevel(level);
             }
           } else {
             // 토큰이 유효하지 않으면 로그아웃
@@ -53,6 +59,10 @@ export const AuthProvider = ({ children }) => {
       if (response.user) {
         setUser(response.user);
         setIsAuthenticated(true);
+        // 사용자 레벨 계산
+        const postCount = response.user.postCount || 0;
+        const level = levelService.calculateLevel(postCount);
+        setUserLevel(level);
         return { success: true, user: response.user };
       }
       
@@ -72,6 +82,7 @@ export const AuthProvider = ({ children }) => {
       await authService.logout();
       setUser(null);
       setIsAuthenticated(false);
+      setUserLevel(null);
     } catch (error) {
       console.error('로그아웃 오류:', error);
     } finally {
@@ -82,12 +93,17 @@ export const AuthProvider = ({ children }) => {
   // 사용자 정보 업데이트
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
+    // 사용자 정보 업데이트 시 레벨도 재계산
+    const postCount = updatedUser.postCount || 0;
+    const level = levelService.calculateLevel(postCount);
+    setUserLevel(level);
   };
 
   const value = {
     user,
     isAuthenticated,
     isLoading,
+    userLevel,
     loginWithWallet,
     logout,
     updateUser,
