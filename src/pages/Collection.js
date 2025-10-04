@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import furnitureService from "../services/furnitureService";
 
 function Collection() {
   const [selectedFurniture, setSelectedFurniture] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+  const { userLevel } = useAuth();
 
   // 이모지 마스터 데이터 (ProfileEdit.js와 동일)
   const emojiMaster = [
@@ -56,49 +59,66 @@ function Collection() {
     profileColorId: 1  // 자연 색상 ID
   };
 
-  // 방 가구 데이터
-  const furniture = [
-    {
-      id: "bed",
-      name: "보상 내역",
-      icon: "🛏️",
-      position: { x: 50, y: 40 },
-      description: "보상 내역을 확인하세요",
-      content: "rewards"
-    },
-    {
-      id: "wardrobe",
-      name: "콘텐츠",
-      icon: "👗",
-      position: { x: 10, y: 20 },
-      description: "콘텐츠를 관리하세요",
-      content: "contents"
-    },
-    {
-      id: "mirror",
-      name: "뱃지 컬렉션",
-      icon: "🪞",
-      position: { x: 80, y: 20 },
-      description: "뱃지 컬렉션을 보세요",
-      content: "badges"
-    },
-    {
-      id: "desk",
-      name: "마을 가이드",
-      icon: "🪑",
-      position: { x: 30, y: 80 },
-      description: "마을 가이드를 읽어보세요",
-      content: "guide"
-    },
-    {
-      id: "plant",
-      name: "내 집 통계",
-      icon: "🪴",
-      position: { x: 85, y: 85 },
-      description: "마을 통계를 확인하세요",
-      content: "stats"
-    }
-  ];
+  // 사용자 레벨에 따른 가구 데이터 생성
+  const getFurnitureData = () => {
+    const level = userLevel?.level || 1;
+    const allFurniture = furnitureService.getAllFurniture(level);
+    
+    return [
+      {
+        id: "bed",
+        name: allFurniture.bed.function.name,
+        icon: allFurniture.bed.image,
+        position: { x: 52.8, y: 27 },
+        description: allFurniture.bed.function.description,
+        content: "rewards",
+        isColor: allFurniture.bed.isColor,
+        size: 1.6 
+      },
+      {
+        id: "closet",
+        name: allFurniture.closet.function.name,
+        icon: allFurniture.closet.image,
+        position: { x: 85, y: 60 },
+        description: allFurniture.closet.function.description,
+        content: "contents",
+        isColor: allFurniture.closet.isColor,
+        size: 1.7 // 기본 크기로 되돌림
+      },
+      {
+        id: "mirror",
+        name: allFurniture.mirror.function.name,
+        icon: allFurniture.mirror.image,
+        position: { x: 73, y: 22 },
+        description: allFurniture.mirror.function.description,
+        content: "badges",
+        isColor: allFurniture.mirror.isColor,
+        size: 0.7 // 0.7배
+      },
+      {
+        id: "desk",
+        name: allFurniture.desk.function.name,
+        icon: allFurniture.desk.image,
+        position: { x: 30, y: 51 },
+        description: allFurniture.desk.function.description,
+        content: "guide",
+        isColor: allFurniture.desk.isColor,
+        size: 1.5 // 기본 크기로 되돌림
+      },
+      {
+        id: "pots",
+        name: allFurniture.pots.function.name,
+        icon: allFurniture.pots.image,
+        position: { x: 14, y: 77 },
+        description: allFurniture.pots.function.description,
+        content: "stats",
+        isColor: allFurniture.pots.isColor,
+        size: 1.4 // 기본 크기 유지
+      }
+    ];
+  };
+
+  const furniture = getFurnitureData();
 
   // 데모용 콘텐츠 데이터
   const userContents = [
@@ -459,32 +479,14 @@ function Collection() {
           position: 'relative',
           width: '100%',
           height: '500px',
-          background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+          backgroundImage: `url(${furnitureService.getBackgroundImage()})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           borderRadius: '20px',
           border: '3px solid #aed581',
           overflow: 'hidden',
           marginBottom: '20px'
         }}>
-          {/* 바닥 패턴 */}
-          <div style={{
-            position: 'absolute',
-            bottom: '0',
-            left: '0',
-            right: '0',
-            height: '100px',
-            background: 'repeating-linear-gradient(90deg, #aed581 0px, #aed581 20px, #9ccc65 20px, #9ccc65 40px)',
-            opacity: 0.3
-          }}></div>
-          
-          {/* 벽지 패턴 */}
-          <div style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            bottom: '100px',
-            background: 'radial-gradient(circle at 20% 50%, rgba(174, 213, 129, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 183, 77, 0.1) 0%, transparent 50%)'
-          }}></div>
 
           {/* 가구들 */}
           {furniture.map((item) => (
@@ -508,55 +510,35 @@ function Collection() {
               }}
             >
               <div style={{
-                fontSize: '48px',
-                textAlign: 'center',
-                marginBottom: '8px',
+                width: `${180 * (item.size || 1)}px`,
+                height: `${180 * (item.size || 1)}px`,
+                backgroundImage: `url(${item.icon})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
                 filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.2))'
-              }}>
-                {item.icon}
-              </div>
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.9)',
-                padding: '4px 8px',
-                borderRadius: '8px',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                color: '#333',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-              }}>
-                {item.name}
-              </div>
+              }}></div>
             </div>
           ))}
 
-          {/* 장식 요소들 */}
+          {/* 레벨 정보 표시 */}
           <div style={{
             position: 'absolute',
-            top: '10%',
-            left: '10%',
-            fontSize: '24px',
-            opacity: 0.3
-          }}>🪟</div>
-          <div style={{
-            position: 'absolute',
-            top: '10%',
-            right: '10%',
-            fontSize: '24px',
-            opacity: 0.3
-          }}>🪟</div>
-          <div style={{
-            position: 'absolute',
-            top: '5%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            fontSize: '20px',
-            opacity: 0.2
-          }}>💡</div>
+            top: '10px',
+            left: '10px',
+            background: 'rgba(255, 255, 255, 0.9)',
+            padding: '8px 12px',
+            borderRadius: '20px',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            color: '#333',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          }}>
+            {userLevel?.emoji} {userLevel?.name} LEVEL{userLevel?.level || 1}
+          </div>
         </div>
 
-        {/* 가구 설명 */}
+        {/* 레벨별 가구 정보 */}
         <div style={{
           background: '#f8f9fa',
           padding: '16px',
@@ -564,9 +546,34 @@ function Collection() {
           border: '1px solid #e9ecef',
           marginBottom: '20px'
         }}>
-          <p style={{ margin: '0', color: '#666', fontSize: '14px', textAlign: 'center' }}>
-            💡 가구를 클릭하여 확인해보세요! 💡
-          </p>
+          <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#333', fontSize: '16px' }}>
+              🏠 현재 레벨 :  {userLevel?.level || 1} 단계 🏠 
+            </h4>
+            <p style={{ margin: '0', color: '#666', fontSize: '14px' }}>
+              💡 가구를 클릭하여 자세한 내용을 확인해보세요! 💡
+            </p>
+          </div>
+          
+          {/* 컬러/흑백 가구 정보 */}
+          <div style={{ display: 'flex', justifyContent: 'space-around', fontSize: '12px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ color: '#4CAF50', fontWeight: 'bold', marginBottom: '4px' }}>
+                🎨 컬러
+              </div>
+              <div style={{ color: '#666' }}>
+                {furniture.filter(item => item.isColor).map(item => item.name).join(', ')}
+              </div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ color: '#999', fontWeight: 'bold', marginBottom: '4px' }}>
+                ⚫ 흑백
+              </div>
+              <div style={{ color: '#666' }}>
+                {furniture.filter(item => !item.isColor).map(item => item.name).join(', ')}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
