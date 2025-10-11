@@ -613,7 +613,7 @@ function Collection() {
               paddingBottom: '15px'
             }}>
               <h3 style={{ margin: 0, color: '#333', fontSize: '24px' }}>
-                {selectedFurniture.icon} {selectedFurniture.name}
+                {selectedFurniture.name}
               </h3>
               <button 
                 onClick={() => setSelectedFurniture(null)}
